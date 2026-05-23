@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rialo PM</title>
+
+    <link rel="icon" type="image/png" href="favicon.png?v=10">
+    <link rel="shortcut icon" type="image/png" href="favicon.png?v=10">
+    <link rel="apple-touch-icon" href="favicon.png?v=10">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .how-extra-flow {
+            width: min(760px, 100%);
+            margin: 18px auto 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .how-extra-flow .how-step {
+            min-height: 235px;
+            border: 1px solid rgba(201, 164, 92, 0.48);
+            background:
+                radial-gradient(circle at 85% 92%, rgba(0, 255, 132, 0.16), transparent 34%),
+                radial-gradient(circle at 20% 0%, rgba(201, 164, 92, 0.12), transparent 34%),
+                linear-gradient(145deg, #1b1b19 0%, #050505 76%);
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.26),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .how-extra-flow .how-step p {
+            line-height: 1.65;
+        }
+
+        .how-extra-flow .how-step strong {
+            color: #f6d67a;
+            font-weight: 950;
+        }
+
+        .top-page-switcher {
+            width: fit-content;
+            max-width: calc(100% - 40px);
+            margin: -36px auto 12px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            position: relative;
+            z-index: 999;
+            border-radius: 999px;
+            background: rgba(241, 235, 221, 0.72);
+            border: 1px solid rgba(138, 116, 75, 0.20);
+            box-shadow:
+                0 12px 26px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.42);
+            backdrop-filter: blur(12px);
+        }
+
+        .top-page-btn {
+            height: 36px;
+            padding: 0 18px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: #080808;
+            font-size: 11px;
+            font-weight: 950;
+            cursor: pointer;
+            white-space: nowrap;
+            transition:
+                transform 0.22s ease,
+                box-shadow 0.22s ease,
+                border-color 0.22s ease,
+                background 0.22s ease;
+        }
+
+        .top-page-btn::before {
+            content: "";
+            position: absolute;
+            top: -90%;
+            left: -45%;
+            width: 42%;
+            height: 280%;
+            transform: rotate(18deg);
+            background:
+                linear-gradient(
+                    115deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.18) 45%,
+                    rgba(255, 255, 255, 0.42) 52%,
+                    transparent 72%
+                );
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .top-page-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            border-color: rgba(201, 164, 92, 0.78);
+            box-shadow:
+                0 10px 22px rgba(0, 0, 0, 0.20),
+                0 0 22px rgba(201, 164, 92, 0.18);
+        }
+
+        .top-page-btn:hover::before,
+        .top-page-btn.clicked::before {
+            animation: pageButtonShine 0.82s ease both;
+        }
+
+        .top-page-btn.active {
+            color: #efe2bd;
+            background:
+                radial-gradient(circle at 22% 0%, rgba(0, 255, 132, 0.16), transparent 36%),
+                linear-gradient(180deg, #151515 0%, #050505 100%);
+            border-color: rgba(201, 164, 92, 0.68);
+            box-shadow:
+                0 8px 18px rgba(0, 0, 0, 0.24),
+                0 0 20px rgba(201, 164, 92, 0.18),
+                inset 0 1px 0 rgba(239, 226, 189, 0.10);
+        }
+
+        .home-page-btn {
+            opacity: 0.86;
+        }
+
+        @keyframes pageButtonShine {
+            0% {
+                left: -50%;
+                opacity: 0;
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 130%;
+                opacity: 0;
+            }
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        body.swap-mode .swap-view,
+        body.nft-mode .nft-view,
+        body.market-mode .market-view {
+            display: block !important;
+        }
+
+        body.swap-mode .top-info-bar,
+        body.swap-mode .steps-wrapper,
+        body.swap-mode .tabs-bar,
+        body.swap-mode .groups-view,
+        body.swap-mode .bracket-view,
+        body.swap-mode .nft-view,
+        body.swap-mode .market-view,
+        body.swap-mode .how-it-works-section,
+        body.swap-mode .prediction-history-section,
+        body.swap-mode .made-by-section,
+        body.nft-mode .top-info-bar,
+        body.nft-mode .steps-wrapper,
+        body.nft-mode .tabs-bar,
+        body.nft-mode .groups-view,
+        body.nft-mode .bracket-view,
+        body.nft-mode .market-view,
+        body.nft-mode .how-it-works-section,
+        body.nft-mode .prediction-history-section,
+        body.nft-mode .made-by-section,
+        body.market-mode .top-info-bar,
+        body.market-mode .steps-wrapper,
+        body.market-mode .tabs-bar,
+        body.market-mode .groups-view,
+        body.market-mode .bracket-view,
+        body.market-mode .nft-view,
+        body.market-mode .how-it-works-section,
+        body.market-mode .prediction-history-section,
+        body.market-mode .made-by-section {
+            display: none !important;
+        }
+
+        .nft-stage,
+        .market-stage {
+            width: min(1480px, calc(100% - 28px));
+            margin: 0 auto 90px;
+            padding: 22px;
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 50% -10%, rgba(239, 226, 189, 0.18), transparent 42%),
+                linear-gradient(180deg, rgba(245, 239, 224, 0.82), rgba(225, 215, 196, 0.64));
+            border: 1px solid rgba(138, 116, 75, 0.28);
+            box-shadow:
+                0 28px 70px rgba(0, 0, 0, 0.18),
+                inset 0 1px 0 rgba(255, 255, 255, 0.45);
+            position: relative;
+            z-index: 4;
+        }
+
+        .nft-stage-header,
+        .market-stage-header {
+            margin-bottom: 18px;
+        }
+
+        .nft-stage-header p,
+        .market-stage-header p {
+            max-width: 650px;
+            margin-top: 10px;
+            color: #3a352f;
+            font-size: 13px;
+            font-weight: 850;
+            line-height: 1.5;
+        }
+
+        .nft-collection-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 14px;
+            perspective: 1200px;
+        }
+
+        .nft-player-card {
+            padding: 9px;
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(0, 255, 132, 0.12), transparent 34%),
+                linear-gradient(180deg, #191919 0%, #070707 100%);
+            border: 1px solid rgba(201, 164, 92, 0.50);
+            box-shadow:
+                0 18px 36px rgba(0, 0, 0, 0.34),
+                0 0 20px rgba(201, 164, 92, 0.10);
+            transform-style: preserve-3d;
+            transition:
+                transform 0.22s ease,
+                box-shadow 0.22s ease,
+                border-color 0.22s ease;
+        }
+
+        .nft-player-card:hover {
+            border-color: rgba(0, 255, 132, 0.72);
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.48),
+                0 0 34px rgba(0, 255, 132, 0.18);
+        }
+
+        .nft-player-image {
+            aspect-ratio: 432 / 648;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #050505;
+            border: 1px solid rgba(239, 226, 189, 0.18);
+        }
+
+        .nft-player-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .nft-player-info {
+            padding: 9px 3px 3px;
+        }
+
+        .nft-player-info strong {
+            display: block;
+            color: #efe2bd;
+            font-size: 14px;
+            font-weight: 950;
+            line-height: 1.05;
+            margin-bottom: 4px;
+        }
+
+        .nft-player-info span {
+            display: block;
+            color: #c9a45c;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .nft-mint-btn {
+            width: 100%;
+            height: 34px;
+            margin-top: 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(201, 164, 92, 0.78);
+            background: linear-gradient(180deg, #efe2bd, #c9a45c);
+            color: #050505;
+            font-size: 10px;
+            font-weight: 950;
+            cursor: pointer;
+        }
+
+        .nft-mint-btn:disabled {
+            opacity: 0.72;
+            cursor: not-allowed;
+            filter: saturate(0.82);
+        }
+
+        .ticket-success-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background:
+                radial-gradient(circle at 50% 45%, rgba(201, 164, 92, 0.18), transparent 34%),
+                radial-gradient(circle at 20% 20%, rgba(120, 70, 255, 0.20), transparent 34%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 132, 0.14), transparent 30%),
+                rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(14px);
+        }
+
+        .ticket-success-overlay.hidden {
+            display: none !important;
+        }
+
+        .market-stage-header-rich {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 16px;
+        }
+
+        .market-create-hero-btn,
+        .market-create-side-btn,
+        .market-open-token-btn,
+        .market-submit-create,
+        .market-trade-btn,
+        .market-back-btn {
+            height: 40px;
+            padding: 0 16px;
+            border: 1px solid rgba(201, 164, 92, 0.72);
+            border-radius: 14px;
+            background: linear-gradient(180deg, #151515 0%, #050505 100%);
+            color: #efe2bd;
+            font-size: 11px;
+            font-weight: 950;
+            cursor: pointer;
+            box-shadow:
+                0 10px 20px rgba(0, 0, 0, 0.20),
+                0 0 14px rgba(201, 164, 92, 0.12);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+
+        .market-create-hero-btn:hover,
+        .market-create-side-btn:hover,
+        .market-open-token-btn:hover,
+        .market-submit-create:hover,
+        .market-trade-btn:hover,
+        .market-back-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(239, 226, 189, 0.82);
+            box-shadow:
+                0 14px 28px rgba(0, 0, 0, 0.28),
+                0 0 18px rgba(201, 164, 92, 0.20);
+        }
+
+        .market-trending-strip {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: max-content;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 16px;
+        }
+
+        .market-trending-chip {
+            min-height: 34px;
+            padding: 0 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #171717 0%, #070707 100%);
+            border: 1px solid rgba(201, 164, 92, 0.26);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+        }
+
+        .market-trending-chip span {
+            color: #00ff84;
+            font-size: 9px;
+            font-weight: 950;
+            letter-spacing: 0.8px;
+        }
+
+        .market-trending-chip strong {
+            color: #efe2bd;
+            font-size: 11px;
+            font-weight: 950;
+        }
+
+        .market-trending-chip small {
+            color: #c9a45c;
+            font-size: 10px;
+            font-weight: 850;
+        }
+
+        .market-shell {
+            display: grid;
+            grid-template-columns: 1.45fr 0.55fr;
+            gap: 16px;
+        }
+
+        .market-board,
+        .market-side-launch,
+        .market-token-summary,
+        .market-chart-card,
+        .market-feed-card,
+        .market-trade-panel,
+        .market-create-sheet {
+            border-radius: 22px;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(0, 255, 132, 0.08), transparent 34%),
+                linear-gradient(180deg, #171717 0%, #080808 100%);
+            border: 1px solid rgba(201, 164, 92, 0.24);
+            box-shadow:
+                0 18px 36px rgba(0, 0, 0, 0.26),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+
+        .market-board,
+        .market-side-launch {
+            padding: 18px;
+        }
+
+        .market-toolbar {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .market-filter-btn {
+            height: 34px;
+            padding: 0 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(201, 164, 92, 0.28);
+            background: rgba(15, 15, 15, 0.96);
+            color: #efe2bd;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .market-filter-btn.active {
+            background: linear-gradient(180deg, #efe2bd 0%, #c9a45c 100%);
+            color: #080808;
+            border-color: rgba(239, 226, 189, 0.72);
+        }
+
+        .market-token-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .market-token-card {
+            overflow: hidden;
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(0, 255, 132, 0.08), transparent 34%),
+                linear-gradient(180deg, #191919 0%, #070707 100%);
+            border: 1px solid rgba(201, 164, 92, 0.26);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.26);
+        }
+
+        .market-token-media {
+            position: relative;
+            aspect-ratio: 1 / 0.78;
+            padding: 18px;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 20% 18%, rgba(239, 226, 189, 0.18), transparent 24%),
+                radial-gradient(circle at 82% 88%, rgba(0, 255, 132, 0.18), transparent 24%),
+                linear-gradient(140deg, #111111 0%, #050505 100%);
+        }
+
+        .market-token-media::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5, 5, 5, 0.10) 0%, rgba(5, 5, 5, 0.24) 56%, rgba(5, 5, 5, 0.48) 100%);
+            pointer-events: none;
+        }
+
+        .market-token-cover {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.72;
+        }
+
+        .market-token-orb,
+        .market-detail-orb {
+            width: 72px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.22), transparent 30%),
+                linear-gradient(180deg, #2b2b2b 0%, #0d0d0d 100%);
+            border: 1px solid rgba(239, 226, 189, 0.24);
+            color: #efe2bd;
+            font-size: 18px;
+            font-weight: 950;
+            box-shadow:
+                0 10px 24px rgba(0, 0, 0, 0.28),
+                0 0 16px rgba(201, 164, 92, 0.12);
+        }
+
+        .market-detail-orb.is-hidden {
+            display: none !important;
+        }
+
+        .market-token-orb,
+        .market-token-badge {
+            z-index: 2;
+        }
+
+        .market-token-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(5, 5, 5, 0.86);
+            border: 1px solid rgba(239, 226, 189, 0.16);
+            color: #efe2bd;
+            font-size: 10px;
+            font-weight: 950;
+        }
+
+        .market-token-body {
+            padding: 12px;
+        }
+
+        .market-token-body strong {
+            display: block;
+            color: #efe2bd;
+            font-size: 15px;
+            font-weight: 950;
+            margin-bottom: 4px;
+        }
+
+        .market-token-body p {
+            color: rgba(239, 226, 189, 0.68);
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1.5;
+            min-height: 48px;
+            margin-bottom: 10px;
+        }
+
+        .market-token-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .market-token-stat {
+            padding: 7px 8px;
+            border-radius: 12px;
+            background: rgba(239, 226, 189, 0.06);
+            border: 1px solid rgba(239, 226, 189, 0.08);
+        }
+
+        .market-token-stat span {
+            display: block;
+            color: rgba(239, 226, 189, 0.56);
+            font-size: 9px;
+            font-weight: 850;
+            margin-bottom: 3px;
+        }
+
+        .market-token-stat strong {
+            display: block;
+            color: #efe2bd;
+            font-size: 11px;
+            font-weight: 950;
+            margin: 0;
+        }
+
+        .market-side-launch {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100%;
+        }
+
+        .market-side-launch strong {
+            display: block;
+            color: #efe2bd;
+            font-size: 22px;
+            font-weight: 950;
+            margin-bottom: 8px;
+        }
+
+        .market-side-launch p {
+            color: rgba(239, 226, 189, 0.72);
+            font-size: 12px;
+            font-weight: 800;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .market-panel-kicker {
+            display: inline-flex;
+            margin-bottom: 8px;
+            color: #c9a45c;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .market-launch-points {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            list-style: none;
+            margin-bottom: 18px;
+        }
+
+        .market-launch-points li {
+            color: #efe2bd;
+            font-size: 11px;
+            font-weight: 850;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(239, 226, 189, 0.06);
+            border: 1px solid rgba(239, 226, 189, 0.08);
+        }
+
+        .market-token-screen-top {
+            margin-bottom: 14px;
+        }
+
+        .market-token-screen-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.45fr 0.5fr;
+            gap: 18px;
+        }
+
+        .market-token-summary,
+        .market-chart-card,
+        .market-feed-card,
+        .market-trade-panel {
+            padding: 18px;
+        }
+
+        .market-detail-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .market-detail-kicker {
+            display: inline-flex;
+            margin-bottom: 6px;
+            color: #c9a45c;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .market-detail-copy strong {
+            display: block;
+            color: #efe2bd;
+            font-size: 26px;
+            font-weight: 950;
+            margin-bottom: 8px;
+        }
+
+        .market-detail-copy p {
+            color: rgba(239, 226, 189, 0.72);
+            font-size: 12px;
+            font-weight: 800;
+            line-height: 1.6;
+        }
+
+        .market-detail-stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .market-detail-stat {
+            padding: 12px;
+            border-radius: 14px;
+            background: rgba(239, 226, 189, 0.06);
+            border: 1px solid rgba(239, 226, 189, 0.08);
+        }
+
+        .market-detail-stat span {
+            display: block;
+            color: rgba(239, 226, 189, 0.56);
+            font-size: 10px;
+            font-weight: 850;
+            margin-bottom: 5px;
+        }
+
+        .market-detail-stat strong {
+            display: block;
+            color: #efe2bd;
+            font-size: 14px;
+            font-weight: 950;
+        }
+
+        .market-chart-head,
+        .market-feed-head,
+        .market-trade-head,
+        .market-create-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .market-chart-head strong,
+        .market-feed-head strong,
+        .market-trade-head strong,
+        .market-create-head strong {
+            color: #efe2bd;
+            font-size: 16px;
+            font-weight: 950;
+        }
+
+        .market-chart-head span,
+        .market-feed-head span,
+        .market-trade-head span,
+        .market-create-head span {
+            color: #c9a45c;
+            font-size: 10px;
+            font-weight: 850;
+        }
+
+        .market-chart-visual {
+            height: 430px;
+            padding: 16px 10px 10px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(239, 226, 189, 0.04), rgba(239, 226, 189, 0.02)),
+                linear-gradient(180deg, #101010 0%, #050505 100%);
+            border: 1px solid rgba(239, 226, 189, 0.08);
+        }
+
+        .market-chart-bar {
+            flex: 1;
+            min-width: 10px;
+            border-radius: 999px 999px 4px 4px;
+            background: linear-gradient(180deg, #efe2bd 0%, #c9a45c 100%);
+            box-shadow: 0 0 10px rgba(201, 164, 92, 0.18);
+        }
+
+        .market-chart-bar.alt {
+            background: linear-gradient(180deg, #00ff84 0%, #13864e 100%);
+            box-shadow: 0 0 12px rgba(0, 255, 132, 0.18);
+        }
+
+        .market-feed-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .market-feed-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(239, 226, 189, 0.06);
+            border: 1px solid rgba(239, 226, 189, 0.08);
+        }
+
+        .market-feed-row strong {
+            color: #efe2bd;
+            font-size: 11px;
+            font-weight: 950;
+        }
+
+        .market-feed-row span {
+            color: #c9a45c;
+            font-size: 10px;
+            font-weight: 850;
+        }
+
+        .market-trade-amount {
+            width: 100%;
+            height: 42px;
+            margin-bottom: 10px;
+            padding: 0 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(201, 164, 92, 0.24);
+            background: linear-gradient(180deg, #121212 0%, #080808 100%);
+            color: #efe2bd;
+            font-size: 13px;
+            font-weight: 850;
+            outline: none;
+        }
+
+        .market-trade-amount:focus {
+            border-color: rgba(239, 226, 189, 0.72);
+            box-shadow: 0 0 0 3px rgba(201, 164, 92, 0.10);
+        }
+
+        .market-trade-btnrow {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .market-trade-btn.sell {
+            background: linear-gradient(180deg, #2a1212 0%, #120707 100%);
+            border-color: rgba(255, 107, 107, 0.42);
+            color: #ffd0d0;
+        }
+
+        .market-trade-status {
+            margin-top: 10px;
+            color: rgba(239, 226, 189, 0.68);
+            font-size: 10px;
+            font-weight: 850;
+            line-height: 1.5;
+        }
+
+        .market-create-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(10px);
+        }
+
+        .market-create-sheet {
+            width: min(720px, 100%);
+            padding: 20px;
+        }
+
+        .market-create-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .market-create-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .market-create-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .market-create-field span {
+            color: #cfc2a3;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .market-create-field input,
+        .market-create-field textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(201, 164, 92, 0.24);
+            background: linear-gradient(180deg, #121212 0%, #080808 100%);
+            color: #efe2bd;
+            font-size: 12px;
+            font-weight: 850;
+            outline: none;
+        }
+
+        .market-create-field textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .market-create-field input:focus,
+        .market-create-field textarea:focus {
+            border-color: rgba(239, 226, 189, 0.72);
+            box-shadow: 0 0 0 3px rgba(201, 164, 92, 0.10);
+        }
+
+        .market-create-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .market-create-status {
+            color: rgba(239, 226, 189, 0.68);
+            font-size: 10px;
+            font-weight: 850;
+            line-height: 1.5;
+        }
+
+        .market-file-picker {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 54px;
+            padding: 10px 12px;
+            border-radius: 16px;
+            border: 1px solid rgba(201, 164, 92, 0.18);
+            background: linear-gradient(180deg, #111827 0%, #0b1220 100%);
+        }
+
+        .market-file-picker .market-file-input {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        .market-file-picker-btn {
+            min-width: 128px;
+            height: 36px;
+            padding: 0 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: 1px solid rgba(94, 234, 212, 0.26);
+            background: linear-gradient(135deg, #5eead4 0%, #60a5fa 100%);
+            color: #0b1220;
+            font-size: 11px;
+            font-weight: 950;
+            cursor: pointer;
+            box-shadow: 0 10px 18px rgba(96, 165, 250, 0.12);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .market-file-picker-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 24px rgba(96, 165, 250, 0.16);
+        }
+
+        .market-file-picker-name {
+            min-width: 0;
+            color: rgba(239, 226, 189, 0.82);
+            font-size: 11px;
+            font-weight: 850;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 1320px) {
+            .nft-collection-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 1180px) {
+            .market-shell,
+            .market-token-screen-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .market-token-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 980px) {
+            .nft-collection-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 720px) {
+            .how-extra-flow {
+                grid-template-columns: 1fr;
+                width: 100%;
+            }
+
+            .how-extra-flow .how-step {
+                min-height: auto;
+            }
+
+            .top-page-switcher {
+                margin-top: 0;
+                flex-direction: column;
+                border-radius: 22px;
+            }
+
+            .top-page-btn,
+            .market-create-hero-btn,
+            .market-create-side-btn,
+            .market-open-token-btn,
+            .market-submit-create,
+            .market-trade-btn,
+            .market-back-btn {
+                width: 100%;
+            }
+
+            .market-stage-header-rich,
+            .market-create-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .market-create-grid,
+            .market-token-grid,
+            .market-detail-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .nft-collection-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wallet-lock-overlay" id="wallet-lock-overlay">
+        <div class="wallet-lock-card">
+            <div class="lock-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                    <path d="M12 14v3"></path>
+                </svg>
+            </div>
+
+            <div class="lock-title">Connect Wallet</div>
+
+            <div class="lock-text">
+                Connect your wallet to unlock Rialo PM.
+            </div>
+
+            <button class="lock-connect-btn" id="lock-connect-btn">
+                <svg class="lock-wallet-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                    <path d="M3 7.5C3 6.39543 3.89543 5.5 5 5.5H18.5C19.3284 5.5 20 6.17157 20 7V8.5H16.5C14.8431 8.5 13.5 9.84315 13.5 11.5C13.5 13.1569 14.8431 14.5 16.5 14.5H20V16.5C20 17.6046 19.1046 18.5 18 18.5H5C3.89543 18.5 3 17.6046 3 16.5V7.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    <path d="M16.5 9H21V14H16.5C15.1193 14 14 12.8807 14 11.5C14 10.1193 15.1193 9 16.5 9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    <circle cx="17.5" cy="11.5" r="0.9" fill="currentColor"/>
+                </svg>
+                <span>Connect Wallet</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="mouse-glow" id="mouse-glow"></div>
+
+    <div class="bg-scene" aria-hidden="true">
+        <div class="bg-blur-layer"></div>
+        <div class="aura aura-center"></div>
+        <div class="aura aura-left"></div>
+        <div class="aura aura-right"></div>
+
+        <div class="soft-particles">
+            <span class="particle p1"></span>
+            <span class="particle p2"></span>
+            <span class="particle p3"></span>
+            <span class="particle p4"></span>
+            <span class="particle p5"></span>
+            <span class="particle p6"></span>
+            <span class="particle p7"></span>
+            <span class="particle p8"></span>
+            <span class="particle p9"></span>
+            <span class="particle p10"></span>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-brand-wrap">
+            <img src="rialo-logo.png" class="brand-logo" alt="Rialo Logo">
+
+            <div class="brand-text"><img src="rialo-title.png" class="brand-title-img" alt="RIALO PM"><span class="brand-name brand-name-fallback">RIALO PM</span></div>
+        </div>
+
+        <div class="wallet-area">
+            <button id="connect-wallet">
+                <svg class="wallet-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                    <path d="M3 7.5C3 6.39543 3.89543 5.5 5 5.5H18.5C19.3284 5.5 20 6.17157 20 7V8.5H16.5C14.8431 8.5 13.5 9.84315 13.5 11.5C13.5 13.1569 14.8431 14.5 16.5 14.5H20V16.5C20 17.6046 19.1046 18.5 18 18.5H5C3.89543 18.5 3 17.6046 3 16.5V7.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    <path d="M16.5 9H21V14H16.5C15.1193 14 14 12.8807 14 11.5C14 10.1193 15.1193 9 16.5 9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    <circle cx="17.5" cy="11.5" r="0.9" fill="currentColor"/>
+                </svg>
+                <span>Connect Wallet</span>
+            </button>
+
+            <div class="wallet-status" id="wallet-status">Wallet not connected</div>
+
+            <div class="twitter-username-box hidden" id="twitter-username-box">
+                <div class="twitter-username-label">
+                    <span>X Username</span>
+                    <small>Required</small>
+                </div>
+
+                <div class="twitter-input-wrap">
+                    <span class="twitter-at">@</span>
+                    <input
+                        type="text"
+                        id="twitter-username-input"
+                        placeholder="yourusername"
+                        autocomplete="off"
+                        maxlength="32"
+                    >
+                </div>
+
+                <button class="twitter-confirm-btn" id="twitter-confirm-btn" type="button">
+                    Confirm
+                </button>
+
+                <div class="twitter-save-status" id="twitter-save-status">
+                    Enter your X username, then confirm.
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="top-page-switcher" aria-label="Page switcher">
+        <button class="top-page-btn home-page-btn" id="home-page-btn" type="button">
+            Home
+        </button>
+
+        <button class="top-page-btn prediction-page-btn active" id="prediction-page-btn" type="button">
+            Rialo Prediction
+        </button>
+
+        <button class="top-page-btn nft-page-btn" id="nft-page-btn" type="button">
+            Rialo NFT Collection
+        </button>
+
+        <button class="top-page-btn swap-page-btn" id="swap-page-btn" type="button">
+            Swap
+        </button>
+
+        <button class="top-page-btn market-page-btn" id="market-page-btn" type="button">
+            Rialo Meme Market
+        </button>
+    </section>
+
+    <section class="top-info-bar">
+        <div class="info-chip prize-chip">
+            <div class="info-top">
+                <svg class="stat-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8 21h8"></path>
+                    <path d="M12 17v4"></path>
+                    <path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"></path>
+                    <path d="M5 5H3v2a4 4 0 0 0 4 4"></path>
+                    <path d="M19 5h2v2a4 4 0 0 1-4 4"></path>
+                </svg>
+                <span class="info-label">Prize Pool</span>
+            </div>
+            <span class="info-value">120,000 RLO</span>
+        </div>
+
+        <div class="info-chip">
+            <div class="info-top">
+                <svg class="stat-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span class="info-label">Teams</span>
+            </div>
+            <span class="info-value">48 Nations</span>
+        </div>
+
+        <div class="info-chip">
+            <div class="info-top">
+                <svg class="stat-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M2 12h20"></path>
+                    <path d="M12 2a15.3 15.3 0 0 1 0 20"></path>
+                    <path d="M12 2a15.3 15.3 0 0 0 0 20"></path>
+                </svg>
+                <span class="info-label">Network</span>
+            </div>
+            <span class="info-value">Rialo Chain</span>
+        </div>
+
+        <div class="info-chip">
+            <div class="info-top">
+                <svg class="stat-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                <span class="info-label">Groups</span>
+            </div>
+            <span class="info-value" id="groups-count">0/12</span>
+        </div>
+
+        <div class="info-chip">
+            <div class="info-top">
+                <svg class="stat-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                <span class="info-label">Bracket</span>
+            </div>
+            <span class="info-value" id="bracket-count">0/31</span>
+        </div>
+
+        <div class="info-chip progress-chip">
+            <div class="info-top">
+                <svg class="stat-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                </svg>
+                <span class="info-label">Progress</span>
+            </div>
+            <span class="info-value" id="progress-count">0/43</span>
+        </div>
+    </section>
+
+    <section class="steps-wrapper">
+        <div class="steps-bar">
+            <span>Rank Groups</span>
+            <span class="step-arrow">&rarr;</span>
+            <span>Build Bracket</span>
+            <span class="step-arrow">&rarr;</span>
+            <span>Submit on Rialo</span>
+        </div>
+
+        <button class="how-btn" id="how-btn">How it works</button>
+    </section>
+
+    <nav class="tabs-bar">
+        <button class="tab-btn active" id="groups-tab-btn" data-view="groups">Groups</button>
+        <button class="tab-btn locked" id="bracket-tab-btn" data-view="bracket">Bracket</button>
+    </nav>
+
+    <section class="view-section nft-view" id="nft-view">
+        <div class="nft-stage">
+            <div class="nft-stage-header">
+                <span class="section-kicker">Rialo NFT Drop</span>
+                <h2 class="section-title">Rialo NFT Collection</h2>
+                <p>
+                    Mint exclusive captain player cards with RLO. Full collection includes all 48 World Cup nations.
+                </p>
+            </div>
+
+            <div class="nft-view-switcher">
+                <button class="nft-view-btn active" id="nft-tab-collection" type="button">Collection</button>
+                <button class="nft-view-btn" id="nft-tab-market" type="button">Nft market</button>
+                <button class="nft-view-btn" id="nft-tab-items" type="button">Items</button>
+            </div>
+
+            <section class="nft-panel active" id="nft-panel-collection">
+                <div class="nft-collection-grid" id="nft-collection-grid"></div>
+            </section>
+
+            <section class="nft-panel" id="nft-panel-market">
+                <div class="nft-items-head">
+                    <div>
+                        <span class="section-kicker">Listed NFTs</span>
+                        <strong>Nft market</strong>
+                    </div>
+                    <small id="nft-market-note">Highest listed price appears first.</small>
+                </div>
+
+                <div class="nft-items-grid" id="nft-market-grid"></div>
+            </section>
+
+            <section class="nft-panel" id="nft-panel-items">
+                <div class="nft-items-head">
+                    <div>
+                        <span class="section-kicker">Your Items</span>
+                        <strong>Owned NFTs</strong>
+                    </div>
+                    <small id="nft-items-note">Connect wallet to load your NFT items.</small>
+                </div>
+
+                <div class="nft-items-grid" id="nft-items-grid"></div>
+            </section>
+
+            <div class="nft-listing-modal" id="nft-listing-modal" hidden>
+                <div class="nft-listing-sheet">
+                    <div class="nft-listing-head">
+                        <strong>Sell NFT</strong>
+                        <span id="nft-listing-subtitle">List your captain card for resale inside Rialo PM.</span>
+                    </div>
+
+                    <label class="nft-listing-field">
+                        <span>Listing Price (RLO)</span>
+                        <input type="text" id="nft-listing-price" inputmode="decimal" placeholder="12.5">
+                    </label>
+
+                    <label class="nft-listing-field">
+                        <span>Amount</span>
+                        <input type="text" id="nft-listing-amount" inputmode="numeric" placeholder="1">
+                    </label>
+
+                    <div class="nft-listing-status" id="nft-listing-status">
+                        Set the RLO price you want for this NFT, then list it in the collection.
+                    </div>
+
+                    <div class="nft-listing-actions">
+                        <button class="nft-listing-submit" id="nft-listing-submit" type="button">List NFT</button>
+                        <button class="nft-listing-cancel" id="nft-listing-cancel" type="button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="view-section swap-view" id="swap-view">
+        <div class="swap-stage swap-stage--simple">
+            <div class="swap-widget-shell">
+                <div class="swap-balance-strip">
+                    <div class="swap-balance-chip">
+                        <span id="swap-wallet-stable-label">Wallet USDC</span>
+                        <strong id="swap-wallet-usdc">-</strong>
+                    </div>
+
+                    <div class="swap-balance-chip">
+                        <span>Wallet RLO</span>
+                        <strong id="swap-wallet-rlo">-</strong>
+                    </div>
+
+                    <div class="swap-balance-chip">
+                        <span>Pool USDC</span>
+                        <strong id="swap-pool-usdc">-</strong>
+                    </div>
+
+                    <div class="swap-balance-chip">
+                        <span>Pool RLO</span>
+                        <strong id="swap-pool-rlo">-</strong>
+                    </div>
+                </div>
+
+                <section class="swap-widget-card">
+                    <div class="swap-widget-head">
+                        <div class="swap-widget-live">
+                            <span class="swap-live-dot"></span>
+                            <strong id="swap-live-mode">Live on-chain swap</strong>
+                        </div>
+
+                        <div class="swap-slippage-inline" id="swap-slippage-group">
+                            <button class="swap-slippage-btn active" type="button" data-swap-slippage="0.5">0.5%</button>
+                            <button class="swap-slippage-btn" type="button" data-swap-slippage="1">1%</button>
+                            <button class="swap-slippage-btn" type="button" data-swap-slippage="3">3%</button>
+                        </div>
+                    </div>
+<div class="swap-box swap-box-top">
+                        <div class="swap-box-label-row">
+                            <span class="swap-box-label" id="swap-input-side-label">Sell</span>
+                            <span class="swap-box-wallet" id="swap-input-balance">Balance: -</span>
+                        </div>
+
+                        <div class="swap-box-main">
+                            <input id="swap-amount-input" class="swap-box-input" type="text" inputmode="decimal" placeholder="0">
+
+                            <div class="swap-token-picker">
+                                <button class="swap-token-pill swap-token-pill-button" id="swap-input-token-pill" type="button" aria-expanded="false" aria-haspopup="listbox">
+                                    <span class="swap-token-mark" id="swap-input-token-mark">U</span>
+                                    <div>
+                                        <strong id="swap-input-token-symbol">USDC</strong>
+                                        <small id="swap-input-token-name">USDC</small>
+                                    </div>
+                                    <span class="swap-token-chevron" aria-hidden="true">&#9662;</span>
+                                </button>
+                                <div class="swap-token-menu" id="swap-token-menu" role="listbox" hidden>
+                                    <button class="swap-token-option active" type="button" data-swap-stable="USDC" role="option" aria-selected="true">
+                                        <span class="swap-token-mark swap-token-mark-usdc">U</span>
+                                        <span>USDC</span>
+                                    </button>
+                                    <button class="swap-token-option" type="button" data-swap-stable="USDT" role="option" aria-selected="false">
+                                        <span class="swap-token-mark swap-token-mark-usdt">T</span>
+                                        <span>USDT</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swap-box-quick-row">
+                            <small class="swap-box-foot" id="swap-input-footnote">$0.00</small>
+
+                            <div class="swap-quick-actions">
+                                <button class="swap-mini-btn" id="swap-quick-20" type="button" data-swap-quick="20">20%</button>
+                                <button class="swap-mini-btn" id="swap-quick-50" type="button" data-swap-quick="50">50%</button>
+                                <button class="swap-mini-btn" id="swap-quick-max" type="button" data-swap-quick="100">MAX</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swap-switch-wrap">
+                        <button class="swap-switch-btn" id="swap-flip-btn" type="button" aria-label="Flip swap direction">
+                            <span>&#8645;</span>
+                        </button>
+                    </div>
+
+                    <div class="swap-box swap-box-bottom">
+                        <div class="swap-box-label-row">
+                            <span class="swap-box-label" id="swap-output-side-label">Buy</span>
+                            <span class="swap-box-wallet" id="swap-output-balance">Balance: -</span>
+                        </div>
+
+                        <div class="swap-box-main swap-box-main-output">
+                            <div class="swap-box-output" id="swap-output-amount">0</div>
+
+                            <div class="swap-token-pill" id="swap-output-token-pill">
+                                <span class="swap-token-mark" id="swap-output-token-mark">R</span>
+                                <div>
+                                    <strong id="swap-output-token-symbol">RLO</strong>
+                                    <small id="swap-output-token-name">Rialo Token</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swap-box-quick-row">
+                            <small class="swap-box-foot" id="swap-output-footnote">$0.00</small>
+                            <small class="swap-box-foot" id="swap-rate">-</small>
+                        </div>
+                    </div>
+
+                    <div class="swap-meta-card">
+                        <div class="swap-meta-row">
+                            <span>Minimum received</span>
+                            <strong id="swap-min-received">-</strong>
+                        </div>
+
+                        <div class="swap-meta-row">
+                            <span>Price impact</span>
+                            <strong id="swap-price-impact">-</strong>
+                        </div>
+                    </div>
+
+                    <button class="swap-submit-btn" id="swap-submit-btn" type="button">Swap USDC to RLO</button>
+                    <div class="swap-status" id="swap-status">Connect your wallet, choose USDC or USDT, seed the pool once, then swap with RLO.</div>
+
+                    <div class="swap-tools-row">
+                        <button class="swap-side-btn" id="swap-faucet-btn" type="button">Get USDC</button>
+                        <button class="swap-side-btn" id="swap-approve-btn" type="button">Approve USDC</button>
+                        <button class="swap-side-btn" id="swap-seed-toggle-btn" type="button">Seed Pool</button>
+                    </div>
+
+                    <div class="swap-seed-panel" id="swap-seed-panel" hidden>
+                        <div class="swap-seed-head">
+                            <strong>Pool Tools</strong>
+                            <span>Seed or refill the pool used by this swap widget.</span>
+                        </div>
+
+                        <div class="swap-seed-grid">
+                            <label class="swap-field">
+                                <span>Seed USDC</span>
+                                <input id="swap-seed-usdc" type="text" inputmode="decimal" value="25">
+                            </label>
+
+                            <label class="swap-field">
+                                <span>Seed RLO</span>
+                                <input id="swap-seed-rlo" type="text" inputmode="decimal" value="50">
+                            </label>
+                        </div>
+
+                        <button class="swap-side-btn swap-seed-btn" id="swap-seed-btn" type="button">Seed Pool</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <section class="view-section market-view" id="market-view">
+        <div class="market-stage">
+            <div class="market-stage-header market-stage-header-rich">
+                <div>
+                    <span class="section-kicker">Rialo Meme Market</span>
+                    <h2 class="section-title">Rialo Meme Market</h2>
+                    <p>
+                        Discover listed coins, launch your own meme token, and open a dedicated token page with chart and trade actions inside Rialo Meme Market.
+                    </p>
+                </div>
+
+                <button class="market-create-hero-btn" id="open-market-create-btn" type="button">
+                    Create Token
+                </button>
+            </div>
+
+            <div class="market-trending-strip" id="market-trending-strip"></div>
+
+            <div class="market-view-default" id="market-view-default">
+                <div class="market-shell">
+                    <div class="market-board">
+                        <div class="market-toolbar">
+                            <button class="market-filter-btn active" data-market-filter="latest" type="button">Latest</button>
+                            <button class="market-filter-btn" data-market-filter="volume" type="button">Top Volume</button>
+                            <button class="market-filter-btn" data-market-filter="mcap" type="button">Top MCap</button>
+                        </div>
+
+                        <div class="market-token-grid" id="market-token-grid"></div>
+                    </div>
+
+                    <div class="market-side-column">
+                        <aside class="market-side-launch">
+                            <div>
+                                <span class="market-panel-kicker">Launch on Rialo</span>
+                                <strong>Create Your Coin</strong>
+                                <p>
+                                    Launch a meme coin, get listed instantly in Rialo Meme Market, and open a dedicated token page with chart, stats, and trade actions.
+                                </p>
+
+                                <ul class="market-launch-points">
+                                    <li>Instant listing inside Rialo Meme Market</li>
+                                    <li>Dedicated token page after launch</li>
+                                    <li>Chart, buy, sell, and trade interface</li>
+                                </ul>
+                            </div>
+
+                            <button class="market-create-side-btn" id="open-market-create-btn-side" type="button">
+                                Create Token
+                            </button>
+                        </aside>
+
+                        <section class="market-portfolio-card" id="market-portfolio-card">
+                            <div class="market-portfolio-head">
+                                <div>
+                                    <span class="market-panel-kicker">Your Market</span>
+                                    <strong>Portfolio</strong>
+                                </div>
+                                <small id="market-portfolio-sync-note">Wallet view</small>
+                            </div>
+
+                            <div class="market-portfolio-summary">
+                                <div class="market-portfolio-stat">
+                                    <span>Total Value</span>
+                                    <strong id="market-portfolio-total-value">-</strong>
+                                </div>
+
+                                <div class="market-portfolio-stat">
+                                    <span>Wallet RLO</span>
+                                    <strong id="market-portfolio-wallet-rlo">-</strong>
+                                </div>
+
+                                <div class="market-portfolio-stat">
+                                    <span>Token Value</span>
+                                    <strong id="market-portfolio-token-value">-</strong>
+                                </div>
+
+                                <div class="market-portfolio-stat">
+                                    <span>Positions</span>
+                                    <strong id="market-portfolio-position-count">0</strong>
+                                </div>
+                            </div>
+
+                            <div class="market-portfolio-pnl" id="market-portfolio-pnl-row">
+                                <span>Unrealized PnL</span>
+                                <strong id="market-portfolio-pnl">-</strong>
+                            </div>
+
+                            <div class="market-portfolio-holdings" id="market-portfolio-holdings"></div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <div class="market-token-screen" id="market-token-screen" hidden>
+                <div class="market-token-screen-top">
+                    <button class="market-back-btn" id="market-detail-back-btn" type="button">
+                        Back to Market
+                    </button>
+                </div>
+
+                <div class="market-token-screen-grid">
+                    <section class="market-token-summary">
+                        <div class="market-detail-head">
+                            <div class="market-detail-orb is-hidden" id="market-detail-orb"></div>
+
+                            <div class="market-detail-copy">
+                                <span class="market-detail-kicker" id="market-detail-symbol">$MP</span>
+                                <strong id="market-detail-name">MoonPeel</strong>
+                                <p id="market-detail-description">
+                                    Community-first meme coin launched inside Rialo Meme Market.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="market-detail-hero is-hidden" id="market-detail-hero">
+                            <img id="market-detail-hero-image" src="" alt="Token meme image">
+                        </div>
+
+                        <div class="market-detail-stats">
+                            <div class="market-detail-stat">
+                                <span>Price</span>
+                                <strong id="market-detail-price">0.0182 RLO</strong>
+                            </div>
+
+                            <div class="market-detail-stat">
+                                <span>Market Cap</span>
+                                <strong id="market-detail-mcap">18.2K</strong>
+                            </div>
+
+                            <div class="market-detail-stat">
+                                <span>Volume</span>
+                                <strong id="market-detail-volume">4.8K</strong>
+                            </div>
+
+                            <div class="market-detail-stat">
+                                <span>Holders</span>
+                                <strong id="market-detail-holders">281</strong>
+                            </div>
+
+                            <div class="market-detail-stat">
+                                <span>Supply</span>
+                                <strong id="market-detail-supply">1000000</strong>
+                            </div>
+
+                            <div class="market-detail-stat">
+                                <span>Website</span>
+                                <strong id="market-detail-website">None</strong>
+                            </div>
+                        </div>
+
+                        <div class="market-detail-market-meta">
+                            <div class="market-detail-market-chip">
+                                <span>Pool RLO</span>
+                                <strong id="market-detail-liquidity">0 RLO</strong>
+                            </div>
+
+                            <div class="market-detail-market-chip">
+                                <span>Pool Token</span>
+                                <strong id="market-detail-pool-token">0 MP</strong>
+                            </div>
+
+                            <div class="market-detail-market-chip">
+                                <span>Fee</span>
+                                <strong id="market-detail-fee">0%</strong>
+                            </div>
+
+                            <div class="market-detail-market-chip">
+                                <span>Contract</span>
+                                <strong id="market-detail-contract">Pending</strong>
+                            </div>
+
+                            <div class="market-detail-market-chip">
+                                <span>Creator</span>
+                                <strong id="market-detail-creator">Wallet</strong>
+                            </div>
+                        </div>
+
+                        <div class="market-detail-link-row">
+                            <a class="market-detail-link" id="market-detail-contract-link" href="#" target="_blank" rel="noopener noreferrer">
+                                View Contract
+                            </a>
+                            <a class="market-detail-link" id="market-detail-launch-link" href="#" target="_blank" rel="noopener noreferrer">
+                                Launch Tx
+                            </a>
+                            <a class="market-detail-link" id="market-detail-creator-link" href="#" target="_blank" rel="noopener noreferrer">
+                                Creator Wallet
+                            </a>
+                        </div>
+                    </section>
+
+                    <section class="market-chart-card" id="market-chart-card">
+                        <div class="market-chart-head">
+                            <div class="market-chart-title-stack">
+                                <strong>Chart</strong>
+                                <div class="market-chart-price-stack">
+                                    <span id="market-chart-price-now">0.0182 RLO</span>
+                                    <small id="market-chart-price-change">0.00%</small>
+                                </div>
+                                <div class="market-live-indicator">
+                                    <span class="market-live-dot" aria-hidden="true"></span>
+                                    <small id="market-chart-live-status">Live market</small>
+                                </div>
+                            </div>
+
+                            <div class="market-chart-controls">
+                                <div class="market-chart-timeframes">
+                                    <button class="market-chart-timeframe-btn active" data-market-timeframe="1m" type="button">1m</button>
+                                    <button class="market-chart-timeframe-btn" data-market-timeframe="5m" type="button">5m</button>
+                                    <button class="market-chart-timeframe-btn" data-market-timeframe="15m" type="button">15m</button>
+                                    <button class="market-chart-timeframe-btn" data-market-timeframe="all" type="button">All</button>
+                                </div>
+                                <span id="market-chart-label">Price Action</span>
+                                <button class="market-chart-zoom-btn" id="market-chart-zoom-out" type="button" aria-label="Zoom out chart">-</button>
+                                <button class="market-chart-zoom-readout" id="market-chart-zoom-readout" type="button">100%</button>
+                                <button class="market-chart-zoom-btn" id="market-chart-zoom-in" type="button" aria-label="Zoom in chart">+</button>
+                            </div>
+                        </div>
+
+                        <div class="market-chart-visual" id="market-chart-visual"></div>
+                    </section>
+
+                    <aside class="market-trade-panel">
+                        <div class="market-trade-head">
+                            <strong>Trade</strong>
+                            <span id="market-trade-symbol">MP</span>
+                        </div>
+
+                        <div class="market-wallet-balances">
+                            <div class="market-wallet-balance-box">
+                                <span>Wallet RLO</span>
+                                <strong id="market-wallet-rlo-balance">-</strong>
+                            </div>
+
+                            <div class="market-wallet-balance-box">
+                                <span>Your Tokens</span>
+                                <strong id="market-wallet-token-balance">-</strong>
+                            </div>
+                        </div>
+
+                        <div class="market-wallet-balance-note" id="market-wallet-balance-note">
+                            Connect wallet to load your RLO balance inside the market.
+                        </div>
+
+                        <div class="market-trade-mode-toggle" role="tablist" aria-label="Trade mode">
+                            <button class="market-trade-mode-btn active" id="market-trade-mode-buy" type="button">Buy</button>
+                            <button class="market-trade-mode-btn" id="market-trade-mode-sell" type="button">Sell</button>
+                        </div>
+
+                        <div class="market-trade-hint">
+                            Buy uses <strong>RLO</strong>. Sell uses <strong>token amount</strong>.
+                        </div>
+
+                        <input
+                            class="market-trade-amount"
+                            id="market-trade-amount"
+                            type="text"
+                            inputmode="decimal"
+                            placeholder="Buy: RLO amount | Sell: token amount"
+                        >
+
+                        <div class="market-trade-slippage">
+                            <span>Slippage</span>
+                            <div class="market-slippage-pills">
+                                <button class="market-slippage-btn" data-market-slippage="50" type="button">0.5%</button>
+                                <button class="market-slippage-btn active" data-market-slippage="100" type="button">1%</button>
+                                <button class="market-slippage-btn" data-market-slippage="300" type="button">3%</button>
+                            </div>
+                        </div>
+
+                        <div class="market-quick-amounts">
+                            <button class="market-quick-amount-btn" type="button" data-market-quick="buy" data-value="0.01">Buy 0.01</button>
+                            <button class="market-quick-amount-btn" type="button" data-market-quick="buy" data-value="0.05">Buy 0.05</button>
+                            <button class="market-quick-amount-btn" type="button" data-market-quick="buy" data-value="0.1">Buy 0.1</button>
+                            <button class="market-quick-amount-btn" type="button" data-market-quick="buy-max">Max RLO</button>
+                            <button class="market-quick-amount-btn sell" type="button" data-market-quick="sell" data-value="0.25">Sell 25%</button>
+                            <button class="market-quick-amount-btn sell" type="button" data-market-quick="sell" data-value="0.5">Sell 50%</button>
+                            <button class="market-quick-amount-btn sell" type="button" data-market-quick="sell" data-value="1">Sell 100%</button>
+                        </div>
+
+                        <div class="market-order-preview" id="market-order-preview">
+                            <div class="market-order-preview-row active" id="market-buy-preview-row">
+                                <div class="market-order-preview-copy">
+                                    <span>Buy Preview</span>
+                                    <strong id="market-buy-preview-amount">Enter RLO amount</strong>
+                                </div>
+                                <small id="market-buy-preview-impact">Impact -</small>
+                            </div>
+
+                            <div class="market-order-preview-row sell" id="market-sell-preview-row">
+                                <div class="market-order-preview-copy">
+                                    <span>Sell Preview</span>
+                                    <strong id="market-sell-preview-amount">Enter token amount</strong>
+                                </div>
+                                <small id="market-sell-preview-impact">Impact -</small>
+                            </div>
+
+                            <div class="market-order-metrics">
+                                <div class="market-order-metric">
+                                    <span id="market-preview-min-label">Minimum received</span>
+                                    <strong id="market-preview-min-received">-</strong>
+                                </div>
+
+                                <div class="market-order-metric">
+                                    <span>Execution Price</span>
+                                    <strong id="market-preview-execution-price">-</strong>
+                                </div>
+
+                                <div class="market-order-metric">
+                                    <span>Slippage</span>
+                                    <strong id="market-preview-slippage">1.0%</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="market-trade-btnrow">
+                            <button class="market-trade-btn" id="market-buy-btn" type="button">Buy</button>
+                            <button class="market-trade-btn sell" id="market-sell-btn" type="button">Sell</button>
+                        </div>
+
+                        <div class="market-last-tx-card" id="market-last-tx-card">
+                            <span>Last transaction</span>
+                            <a class="market-detail-link disabled" id="market-last-tx-link" href="#" target="_blank" rel="noopener noreferrer" aria-disabled="true">Awaiting trade confirmation</a>
+                        </div>
+
+                        <div class="market-trade-status" id="market-trade-status">
+                            Live trades update the token price, market cap, volume, and chart inside Rialo Meme Market.
+                        </div>
+                    </aside>
+                </div>
+
+                <section class="market-feed-card" id="market-feed-card" style="margin-top: 14px;">
+                    <div class="market-feed-head">
+                        <strong>Recent Trades</strong>
+                        <span>Live Activity</span>
+                    </div>
+
+                    <div class="market-feed-list" id="market-trade-feed"></div>
+                </section>
+
+                <section class="market-feed-card" id="market-my-trades-card" style="margin-top: 14px;">
+                    <div class="market-feed-head">
+                        <strong>My Trades</strong>
+                        <span id="market-my-trades-note">Wallet view</span>
+                    </div>
+
+                    <div class="market-feed-list" id="market-my-trades-feed"></div>
+                </section>
+            </div>
+
+            <div class="market-create-modal" id="market-create-modal" hidden>
+                <div class="market-create-sheet">
+                    <div class="market-create-head">
+                        <strong>Create Token</strong>
+                        <span>Launch a new meme coin inside Rialo Meme Market</span>
+                    </div>
+
+                    <form id="market-create-form">
+                        <div class="market-create-grid">
+                            <label class="market-create-field">
+                                <span>Token Name</span>
+                                <input type="text" id="market-create-name" placeholder="MoonPeel">
+                            </label>
+
+                            <label class="market-create-field">
+                                <span>Symbol</span>
+                                <input type="text" id="market-create-symbol" maxlength="10" placeholder="PEEL">
+                            </label>
+
+                            <label class="market-create-field">
+                                <span>Market Opening Price (RLO)</span>
+                                <input type="text" id="market-create-price" inputmode="decimal" placeholder="0.0125">
+                            </label>
+
+                            <input type="hidden" id="market-create-seed-liquidity" value="0.05">
+
+                            <label class="market-create-field">
+                                <span>Supply</span>
+                                <input type="number" id="market-create-supply" min="1" step="1" placeholder="1000000">
+                            </label>
+
+                            <div class="market-create-field full market-file-field">
+                                <span>Meme Image</span>
+                                <div class="market-file-picker">
+                                    <input class="market-file-input" type="file" id="market-create-image" accept="image/png,image/jpeg,image/webp,image/gif">
+                                    <label class="market-file-picker-btn" for="market-create-image">Upload File</label>
+                                    <span class="market-file-picker-name" id="market-create-image-name">No file selected</span>
+                                </div>
+                            </div>
+
+                            <div class="market-create-image-preview" id="market-create-image-preview">
+                                <span>No file selected yet.</span>
+                            </div>
+
+                            <label class="market-create-field full">
+                                <span>Description</span>
+                                <textarea id="market-create-description" placeholder="A meme coin created inside Rialo Meme Market."></textarea>
+                            </label>
+
+                            <label class="market-create-field full">
+                                <span>Website (Optional)</span>
+                                <input type="text" id="market-create-website" placeholder="https://yourproject.site">
+                            </label>
+                        </div>
+
+                        <div class="market-create-actions">
+                            <button class="market-submit-create" type="submit">Launch Token</button>
+                            <button class="market-back-btn" id="close-market-create-btn" type="button">Cancel</button>
+                        </div>
+
+                        <div class="market-create-status" id="market-create-status">
+                            Launch a community token in Rialo Meme Market and list it on-chain with RLO liquidity.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="view-section groups-view active" id="groups-view">
+        <div class="groups-stage">
+            <div class="groups-header">
+                <div>
+                    <span class="section-kicker">Group Stage</span>
+                    <h2 class="section-title">Rank all 12 groups</h2>
+                </div>
+
+                <div class="groups-header-actions">
+                    <div class="groups-note">Use &uarr; &darr; to reorder. Lock each group when ready.</div>
+                    <button class="generate-btn" id="generate-bracket" disabled>Generate Bracket</button>
+                </div>
+            </div>
+
+            <div class="groups-grid" id="groups-grid"></div>
+        </div>
+    </section>
+
+    <section class="view-section bracket-view" id="bracket-view">
+        <div class="bracket-top-title">
+            <span class="section-kicker">Knockout Bracket</span>
+            <h2 class="section-title">Path to the Rialo PM Trophy</h2>
+        </div>
+
+        <main class="main-bracket bracket-locked" id="main-bracket">
+            <div class="bracket-lock-message" id="bracket-lock-message">
+                Complete all 12 groups, then click Generate Bracket.
+            </div>
+
+            <svg id="connector-layer"></svg>
+
+            <section class="bracket-side left-side">
+                <div class="region-label region-top">LEFT SIDE</div>
+                <div class="round" id="L1"></div>
+                <div class="round" id="L2"></div>
+                <div class="round" id="L3"></div>
+                <div class="round" id="L4"></div>
+                <div class="round hidden-round" id="L5"></div>
+            </section>
+
+            <section class="center-stage">
+                <div class="final-card" id="final-card">
+                    <div class="trophy-title">RIALO PM</div>
+
+                    <div class="trophy-wrap">
+                        <img class="trophy-img" src="world-cup-trophy.png" alt="Rialo Trophy">
+                    </div>
+
+                    <div class="championship-label">CHAMPIONSHIP</div>
+
+                    <div class="final-matchup">
+                        <div class="final-team" id="final-left">TBD</div>
+                        <span class="vs">VS</span>
+                        <div class="final-team" id="final-right">TBD</div>
+                    </div>
+
+                    <div class="entry-odds-card" id="entry-odds-card">
+                        <div class="entry-odds-head">
+                            <span>RLO Entry & Odds</span>
+                            <strong id="risk-level">Low</strong>
+                        </div>
+
+                        <div class="entry-row">
+                            <span>Entry Amount</span>
+
+                            <div class="entry-input-wrap">
+                                <input
+                                    type="number"
+                                    id="entry-amount-input"
+                                    value="0.000001"
+                                    min="0.000000000000000001"
+                                    step="any"
+                                >
+                                <span class="entry-currency">RLO</span>
+                            </div>
+                        </div>
+
+                        <div class="odds-grid">
+                            <div class="odds-box">
+                                <span>Odds</span>
+                                <strong id="current-odds">1.00x</strong>
+                            </div>
+
+                            <div class="odds-box highlight">
+                                <span>Potential Return</span>
+                                <strong id="potential-return">10 RLO</strong>
+                            </div>
+                        </div>
+
+                        <div class="entry-help" id="odds-help">
+                            Select your champion to calculate odds.
+                        </div>
+                    </div>
+
+                    <button id="submit-picks" disabled>Submit on Rialo</button>
+
+                    <div class="submit-status" id="submit-status">
+                        Generate bracket first
+                    </div>
+
+                    <div class="center-note">
+                        Select winners to advance through the bracket
+                    </div>
+                </div>
+            </section>
+
+            <section class="bracket-side right-side">
+                <div class="region-label region-top">RIGHT SIDE</div>
+                <div class="round hidden-round" id="R5"></div>
+                <div class="round" id="R4"></div>
+                <div class="round" id="R3"></div>
+                <div class="round" id="R2"></div>
+                <div class="round" id="R1"></div>
+            </section>
+        </main>
+    </section>
+    <section class="home-guide-section" id="home-guide-section">
+        <div class="home-guide-shell">
+            <div class="home-guide-head">
+                <div>
+                    <span>RIALO PM START</span>
+                    <h2>Choose your next move</h2>
+                </div>
+                <p>Everything starts here: swap, predict, mint, list, trade, or ask Rialo Chat.</p>
+            </div>
+            <div class="home-guide-strip" id="home-guide-strip">
+                <div class="home-guide-card">
+                    <span>01</span>
+                    <strong>Swap</strong>
+                    <p>Get USDC or USDT, approve once, then swap into RLO with a Rialo Testnet wallet confirmation.</p>
+                </div>
+                <div class="home-guide-card">
+                    <span>02</span>
+                    <strong>Prediction</strong>
+                    <p>Rank every group, generate the bracket, pick winners, then submit your final prediction.</p>
+                </div>
+                <div class="home-guide-card">
+                    <span>03</span>
+                    <strong>NFT Collection</strong>
+                    <p>Mint captain cards, open Items to see your owned NFTs, and list cards for resale.</p>
+                </div>
+                <div class="home-guide-card">
+                    <span>04</span>
+                    <strong>NFT Market</strong>
+                    <p>Listed cards appear by price. Buyers see the listing price and confirm purchase in MetaMask.</p>
+                </div>
+                <div class="home-guide-card">
+                    <span>05</span>
+                    <strong>Rialo Meme Market</strong>
+                    <p>Create meme tokens, open charts, trade with slippage, and see public market activity.</p>
+                </div>
+                <div class="home-guide-card">
+                    <span>06</span>
+                    <strong>Rialo Chat</strong>
+                    <p>Use the AI button anywhere to ask about wallet steps, swaps, NFTs, or the current page.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="how-it-works-section" id="how-it-works-section">
+        <div class="how-bg-orb how-orb-1"></div>
+        <div class="how-bg-orb how-orb-2"></div>
+
+        <div class="how-premium-card">
+            <div class="how-header">
+                <div class="how-kicker">RIALO GAME GUIDE</div>
+                <h2>How Rialo PM Works</h2>
+                <p>
+                    Build your prediction from the group stage to the final. Rank every group,
+                    generate the knockout bracket, choose your champion, set your RLO entry,
+                    and submit your complete picks on Rialo.
+                </p>
+            </div>
+
+            <div class="how-flow">
+                <div class="how-step">
+                    <div class="how-step-icon">01</div>
+                    <h3>Rank Groups</h3>
+                    <p>
+                        Start with 12 groups. Move teams up or down to predict the final ranking
+                        of each group. Lock every group when your prediction is ready.
+                    </p>
+                </div>
+
+                <div class="how-step">
+                    <div class="how-step-icon">02</div>
+                    <h3>Generate Bracket</h3>
+                    <p>
+                        After all groups are locked, the game creates a 32-team knockout bracket
+                        from your rankings, including qualified third-place teams.
+                    </p>
+                </div>
+
+                <div class="how-step">
+                    <div class="how-step-icon">03</div>
+                    <h3>Pick Winners</h3>
+                    <p>
+                        Select winners round by round until the final. Your bracket progress
+                        updates automatically as you complete each prediction.
+                    </p>
+                </div>
+
+                <div class="how-step how-step-gold">
+                    <div class="how-step-icon">04</div>
+                    <h3>RLO Entry & Submit</h3>
+                    <p>
+                        Enter your RLO amount, check the odds and potential return, then submit
+                        on Rialo when all groups, bracket picks, and champion selection are complete.
+                    </p>
+                </div>
+            </div>
+
+            <div class="how-extra-flow">
+                <div class="how-step how-step-extra">
+                    <div class="how-step-icon">05</div>
+                    <h3>Prize Pool Access</h3>
+                    <p>
+                        Once you participate by predicting the World Cup winner, whether your
+                        prediction wins or loses, you will enter the <strong>120,000 RLO Prize Pool</strong>.
+                        The distribution will take place after the World Cup Final on
+                        <strong>Sunday, July 19, 2026</strong>.
+                    </p>
+                </div>
+
+                <div class="how-step how-step-extra">
+                    <div class="how-step-icon">06</div>
+                    <h3>Smart Winning System</h3>
+                    <p>
+                        The winning system does not require your predictions to be 100% correct.
+                        Rewards are based on how close your bracket predictions are to the real results.
+                        For example, if you correctly predict one team in the quarter-finals,
+                        you will receive a certain share. If you correctly predict three teams,
+                        your reward share increases, and so on. The closer your predictions are,
+                        the higher your potential reward.
+                    </p>
+                </div>
+            </div>
+            <div class="how-bottom-note">
+                Higher-risk champion picks can increase your odds. Favorites are safer but give lower returns.
+            </div>
+        </div>
+    </section>
+
+    <section class="prediction-history-section" id="prediction-history-section">
+        <div class="history-card">
+            <div class="history-header">
+                <div>
+                    <span class="history-kicker">Player History</span>
+                    <h2>My Prediction History</h2>
+                </div>
+
+                <div class="history-wallet-note" id="history-wallet-note">
+                    Connect wallet to see your history
+                </div>
+            </div>
+
+            <div class="history-list" id="history-list">
+                <div class="history-empty">
+                    No predictions submitted yet.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="made-by-section">
+        <div class="made-by-card">
+            <div class="creator-avatars">
+                <img src="creator-abdo.png" alt="ABDO" class="creator-avatar">
+                <img src="creator-liteino.png" alt="LiTEino" class="creator-avatar">
+            </div>
+
+            <div class="made-by-text">Made by <span>ABDO</span> &amp; <span>LiTEino</span></div>
+        </div>
+    </section>
+
+    <div class="ticket-success-overlay hidden" id="ticket-success-overlay">
+        <div class="ticket-success-bg" id="ticket-success-bg"></div>
+
+        <div class="ticket-success-card">
+            <button class="ticket-close-btn" id="ticket-close-btn" type="button">&times;</button>
+
+            <div class="ticket-glow-effect"></div>
+
+            <div class="ticket-image-wrap">
+                <img src="prize-ticket.png" alt="Rialo Prize Pool Ticket" class="ticket-base-img">
+
+                <div class="ticket-user-avatar-wrap">
+                    <img id="ticket-user-avatar" src="" alt="User avatar" class="ticket-user-avatar">
+                </div>
+
+                <div class="ticket-user-name" id="ticket-user-name">
+                    @player
+                </div>
+
+                <div class="ticket-wallet-mini" id="ticket-wallet-mini">
+                    Wallet confirmed
+                </div>
+            </div>
+
+            <div class="ticket-success-info">
+                <h3>Entry Confirmed</h3>
+                <p>
+                    Your prediction has been submitted successfully.
+                </p>
+
+                <div class="ticket-actions">
+                    <a href="#" target="_blank" rel="noopener noreferrer" id="ticket-tx-link" class="ticket-tx-link">
+                        View Transaction
+                    </a>
+
+                    <button type="button" id="ticket-download-btn" class="ticket-action-btn">
+                        Download Ticket
+                    </button>
+
+                    <button type="button" id="ticket-share-x-btn" class="ticket-action-btn share-x">
+                        Share on X
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-social-dock" aria-label="Rialo social links">
+        <a
+            href="https://x.com/RialoHQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="floating-social-link icon-3d-link icon-x-link"
+            aria-label="Rialo on X"
+            title="Rialo on X"
+        >
+            <span class="icon-glow-ring"></span>
+            <img src="icon-x-3d.png" alt="X" class="social-3d-icon">
+        </a>
+
+        <a
+            href="https://www.rialo.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="floating-social-link icon-3d-link icon-web-link"
+            aria-label="Rialo Website"
+            title="Rialo Website"
+        >
+            <span class="icon-glow-ring"></span>
+            <img src="icon-web-3d.png" alt="Website" class="social-3d-icon">
+        </a>
+
+        <a
+            href="https://t.me/rialoprotocol"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="floating-social-link icon-3d-link icon-telegram-link"
+            aria-label="Rialo Telegram"
+            title="Rialo Telegram"
+        >
+            <span class="icon-glow-ring"></span>
+            <img src="icon-telegram-3d.png" alt="Telegram" class="social-3d-icon">
+        </a>
+    </div>
+
+    <div class="ai-assistant-shell" id="ai-assistant-shell" aria-live="polite">
+        <button class="ai-assistant-fab" id="ai-assistant-fab" type="button" aria-label="Open AI assistant" aria-expanded="false">
+            <span class="ai-fab-pulse"></span>
+            <span class="ai-fab-icon" aria-hidden="true">
+                <img class="ai-fab-custom-image hidden" id="ai-fab-custom-image" src="ai.png" alt="" />
+                <svg class="ai-fab-logo" viewBox="0 0 64 64" fill="none">
+                    <path d="M31.8 18.5C24.9 18.5 19.3 24.1 19.3 31C19.3 37.9 24.9 43.5 31.8 43.5C38.7 43.5 44.3 37.9 44.3 31C44.3 24.1 38.7 18.5 31.8 18.5Z" stroke="#F8FAFC" stroke-width="3.2"/>
+                    <path d="M26.1 37.1L38 24.9" stroke="#F8FAFC" stroke-width="3.2" stroke-linecap="round"/>
+                    <path d="M25.7 31.5C25.7 28.7 28 26.4 30.8 26.4H33.7C36.5 26.4 38.8 28.7 38.8 31.5V34.3C38.8 37.1 36.5 39.4 33.7 39.4H31.2L27.7 42.5V39.4H30.8C28 39.4 25.7 37.1 25.7 34.3V31.5Z" fill="#F8FAFC"/>
+                    <circle cx="30.4" cy="32.8" r="1.2" fill="#0A0D12"/>
+                    <circle cx="34.1" cy="32.8" r="1.2" fill="#0A0D12"/>
+                    <path d="M45.9 17.2L46.8 19.3L48.9 20.2L46.8 21.1L45.9 23.2L45 21.1L42.9 20.2L45 19.3L45.9 17.2Z" fill="#F8FAFC"/>
+                </svg>
+            </span>
+        </button>
+
+        <section class="ai-assistant-panel hidden" id="ai-assistant-panel" aria-label="Rialo Chat Assistant">
+            <div class="ai-assistant-head">
+                <div>
+                    <span class="ai-assistant-kicker">Rialo Chat</span>
+                    <strong>Ask Anything</strong>
+                </div>
+
+                <button class="ai-assistant-close" id="ai-assistant-close" type="button" aria-label="Close AI assistant">&times;</button>
+            </div>
+
+            <div class="ai-assistant-meta" id="ai-assistant-meta">
+                Live helper for market, NFTs, wallet, and predictions.
+            </div>
+
+            <div class="ai-assistant-messages" id="ai-assistant-messages">
+                <div class="ai-message ai-message-assistant">
+                    <strong>Rialo Chat</strong>
+                    <p>Hi. I can help with trading, NFTs, wallet steps, and how the product works.</p>
+                </div>
+            </div>
+
+            <div class="ai-assistant-suggestions" id="ai-assistant-suggestions">
+                <button type="button" class="ai-suggestion-chip">How do I buy a listed NFT?</button>
+                <button type="button" class="ai-suggestion-chip">Explain slippage</button>
+                <button type="button" class="ai-suggestion-chip">How do I create a token?</button>
+            </div>
+
+            <form class="ai-assistant-form" id="ai-assistant-form">
+                <textarea
+                    id="ai-assistant-input"
+                    rows="2"
+                    maxlength="1200"
+                    placeholder="Ask Rialo Chat..."
+                ></textarea>
+                <button type="submit" class="ai-assistant-send">Send</button>
+            </form>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

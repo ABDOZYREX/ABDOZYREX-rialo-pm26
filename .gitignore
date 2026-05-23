@@ -1,0 +1,9 @@
+﻿node_modules/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+/data/*.db
+/data/rialo-ai.config.json
+/data/indexer-cache.json
