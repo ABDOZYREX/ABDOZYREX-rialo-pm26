@@ -10535,3 +10535,795 @@ body.home-mode .home-guide-section.home-guide-focus .home-guide-card:nth-child(6
 #market-view .market-create-image-preview strong {
     display: none !important;
 }
+
+/* Home decorative image slots */
+.home-guide-shell {
+    isolation: isolate;
+}
+
+.home-visual-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.home-visual {
+    position: absolute;
+    object-fit: contain;
+    filter: drop-shadow(0 22px 36px rgba(5, 8, 22, 0.18));
+    opacity: 0.92;
+    transform: translateZ(0);
+}
+
+.home-visual-left-top {
+    width: clamp(120px, 16vw, 260px);
+    left: -54px;
+    top: 34px;
+    transform: rotate(-5deg);
+}
+
+.home-visual-left-bottom {
+    width: clamp(120px, 15vw, 240px);
+    left: 18px;
+    bottom: 28px;
+    transform: rotate(4deg);
+}
+
+.home-visual-center {
+    width: clamp(150px, 19vw, 300px);
+    left: 50%;
+    top: 46%;
+    transform: translate(-50%, -50%);
+    opacity: 0.82;
+}
+
+.home-visual-right-top {
+    width: clamp(120px, 16vw, 260px);
+    right: -48px;
+    top: 42px;
+    transform: rotate(5deg);
+}
+
+.home-visual-right-bottom {
+    width: clamp(120px, 15vw, 240px);
+    right: 16px;
+    bottom: 26px;
+    transform: rotate(-4deg);
+}
+
+.home-guide-head,
+.home-guide-strip,
+.home-guide-card,
+.home-footer-banner-wrap {
+    position: relative;
+    z-index: 2;
+}
+
+.home-footer-banner-wrap {
+    margin: 26px 0 0;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(239, 226, 189, 0.58);
+    background: rgba(5, 8, 22, 0.08);
+    box-shadow: 0 20px 52px rgba(5, 8, 22, 0.16);
+}
+
+.home-footer-banner {
+    display: block;
+    width: 100%;
+    height: clamp(170px, 23vw, 300px);
+    object-fit: cover;
+}
+
+@media (max-width: 900px) {
+    .home-visual-layer {
+        opacity: 0.34;
+    }
+
+    .home-visual-left-bottom,
+    .home-visual-right-bottom {
+        display: none;
+    }
+
+    .home-footer-banner {
+        height: 190px;
+    }
+}
+
+/* Home visuals moved to the second guide section */
+.how-premium-card {
+    isolation: isolate;
+}
+
+.how-visual-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: inherit;
+}
+
+.how-visual {
+    position: absolute;
+    object-fit: contain;
+    opacity: 0.16;
+    filter: saturate(0.95) contrast(1.04) drop-shadow(0 18px 28px rgba(5, 8, 22, 0.16));
+}
+
+.how-visual-a {
+    width: clamp(130px, 18vw, 260px);
+    left: -36px;
+    top: 34px;
+    transform: rotate(-9deg);
+}
+
+.how-visual-b {
+    width: clamp(120px, 15vw, 220px);
+    left: 28px;
+    bottom: 34px;
+    transform: rotate(7deg);
+}
+
+.how-visual-c {
+    width: clamp(160px, 22vw, 320px);
+    left: 50%;
+    top: 56%;
+    transform: translate(-50%, -50%) rotate(-2deg);
+    opacity: 0.18;
+}
+
+.how-visual-d {
+    width: clamp(130px, 18vw, 260px);
+    right: -30px;
+    top: 48px;
+    transform: rotate(8deg);
+}
+
+.how-visual-e {
+    width: clamp(120px, 15vw, 220px);
+    right: 30px;
+    bottom: 36px;
+    transform: rotate(-6deg);
+}
+
+.how-header,
+.how-flow,
+.how-extra-flow,
+.how-bottom-note {
+    position: relative;
+    z-index: 2;
+}
+
+.prediction-coming-soon-wrap {
+    width: min(1120px, calc(100% - 36px));
+    margin: 24px auto 0;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid rgba(239, 226, 189, 0.56);
+    background: rgba(5, 8, 22, 0.06);
+    box-shadow: 0 22px 56px rgba(5, 8, 22, 0.16);
+}
+
+.prediction-coming-soon-img {
+    display: block;
+    width: 100%;
+    height: clamp(180px, 24vw, 320px);
+    object-fit: cover;
+}
+
+@media (max-width: 900px) {
+    .how-visual {
+        opacity: 0.09;
+    }
+
+    .how-visual-b,
+    .how-visual-e {
+        display: none;
+    }
+
+    .prediction-coming-soon-img {
+        height: 190px;
+    }
+}
+
+/* Prediction History decorative image slots */
+.prediction-history-section {
+    position: relative;
+    isolation: isolate;
+    padding-top: 104px;
+}
+
+.history-visual-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.history-visual {
+    position: absolute;
+    object-fit: contain;
+    opacity: 0.82;
+    filter: drop-shadow(0 18px 34px rgba(5, 8, 22, 0.16));
+}
+
+.history-visual-top-left {
+    width: clamp(92px, 11vw, 160px);
+    left: max(10px, calc(50% - 560px));
+    top: 6px;
+    transform: rotate(-5deg);
+}
+
+.history-visual-top-center {
+    width: clamp(98px, 12vw, 170px);
+    left: 50%;
+    top: -2px;
+    transform: translateX(-50%) rotate(2deg);
+}
+
+.history-visual-top-right {
+    width: clamp(92px, 11vw, 160px);
+    right: max(10px, calc(50% - 560px));
+    top: 8px;
+    transform: rotate(5deg);
+}
+
+.history-visual-left {
+    width: clamp(88px, 10vw, 150px);
+    left: max(8px, calc(50% - 690px));
+    top: 260px;
+    transform: rotate(4deg);
+}
+
+.history-visual-right {
+    width: clamp(88px, 10vw, 150px);
+    right: max(8px, calc(50% - 690px));
+    top: 258px;
+    transform: rotate(-4deg);
+}
+
+.prediction-history-section .history-card,
+.prediction-history-section .prediction-coming-soon-wrap {
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width: 900px) {
+    .prediction-history-section {
+        padding-top: 70px;
+    }
+
+    .history-visual-top-center {
+        display: none;
+    }
+
+    .history-visual-left,
+    .history-visual-right {
+        opacity: 0.44;
+        top: 230px;
+    }
+}
+
+/* Disable old How visual layer */
+.how-visual-layer { display: none !important; }
+
+
+/* Prediction History spacing refinement */
+.prediction-history-section {
+    padding-top: 158px !important;
+}
+
+.history-visual-top-left {
+    top: 18px !important;
+    left: max(22px, calc(50% - 600px)) !important;
+    width: clamp(76px, 9vw, 126px) !important;
+}
+
+.history-visual-top-center {
+    top: 24px !important;
+    width: clamp(82px, 10vw, 138px) !important;
+}
+
+.history-visual-top-right {
+    top: 20px !important;
+    right: max(22px, calc(50% - 600px)) !important;
+    width: clamp(76px, 9vw, 126px) !important;
+}
+
+.history-visual-left {
+    top: 330px !important;
+    left: max(10px, calc(50% - 710px)) !important;
+    width: clamp(70px, 8vw, 118px) !important;
+}
+
+.history-visual-right {
+    top: 330px !important;
+    right: max(10px, calc(50% - 710px)) !important;
+    width: clamp(70px, 8vw, 118px) !important;
+}
+
+.prediction-coming-soon-wrap {
+    margin-top: 42px !important;
+}
+
+@media (max-width: 900px) {
+    .prediction-history-section {
+        padding-top: 118px !important;
+    }
+
+    .history-visual-top-left,
+    .history-visual-top-right {
+        width: 82px !important;
+        top: 22px !important;
+    }
+
+    .history-visual-left,
+    .history-visual-right {
+        display: none !important;
+    }
+}
+
+/* Prediction History visual polish */
+.prediction-history-section {
+    padding-top: 128px !important;
+}
+
+.history-visual {
+    opacity: 0.74 !important;
+    filter:
+        drop-shadow(0 14px 24px rgba(5, 8, 22, 0.14))
+        drop-shadow(0 0 18px rgba(46, 230, 166, 0.10)) !important;
+    transition: transform 0.35s ease, opacity 0.35s ease !important;
+}
+
+.history-visual-top-left {
+    width: clamp(64px, 7vw, 104px) !important;
+    left: max(58px, calc(50% - 480px)) !important;
+    top: 28px !important;
+    transform: rotate(-5deg) !important;
+}
+
+.history-visual-top-center {
+    width: clamp(76px, 8vw, 118px) !important;
+    top: 32px !important;
+    transform: translateX(-50%) rotate(1deg) !important;
+}
+
+.history-visual-top-right {
+    width: clamp(64px, 7vw, 104px) !important;
+    right: max(58px, calc(50% - 480px)) !important;
+    top: 30px !important;
+    transform: rotate(5deg) !important;
+}
+
+.history-visual-left {
+    width: clamp(62px, 7vw, 96px) !important;
+    left: max(54px, calc(50% - 520px)) !important;
+    top: 300px !important;
+    opacity: 0.62 !important;
+}
+
+.history-visual-right {
+    width: clamp(62px, 7vw, 96px) !important;
+    right: max(54px, calc(50% - 520px)) !important;
+    top: 300px !important;
+    opacity: 0.62 !important;
+}
+
+.prediction-history-section .history-card {
+    box-shadow:
+        0 26px 56px rgba(5, 8, 22, 0.20),
+        0 -18px 60px rgba(239, 226, 189, 0.10),
+        inset 0 1px 0 rgba(239, 226, 189, 0.16) !important;
+}
+
+.prediction-coming-soon-wrap {
+    width: min(990px, calc(100% - 72px)) !important;
+    margin-top: 34px !important;
+    border-radius: 24px !important;
+    background:
+        radial-gradient(circle at 50% 20%, rgba(46, 230, 166, 0.13), transparent 34%),
+        linear-gradient(180deg, rgba(255, 250, 232, 0.52), rgba(239, 226, 189, 0.24)) !important;
+    box-shadow:
+        0 24px 64px rgba(5, 8, 22, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.58) !important;
+}
+
+.prediction-coming-soon-img {
+    height: clamp(150px, 18vw, 230px) !important;
+    object-fit: contain !important;
+    padding: 18px 24px !important;
+    filter:
+        drop-shadow(0 18px 28px rgba(5, 8, 22, 0.22))
+        drop-shadow(0 0 20px rgba(239, 226, 189, 0.16));
+}
+
+@media (max-width: 900px) {
+    .history-visual-top-left,
+    .history-visual-top-right {
+        width: 68px !important;
+    }
+
+    .prediction-coming-soon-wrap {
+        width: min(94%, 680px) !important;
+    }
+}
+
+/* Final History layout: league images in white space, not on Coming Soon */
+.prediction-history-section {
+    padding-top: 172px !important;
+}
+
+.history-visual-top-left {
+    width: clamp(86px, 9.5vw, 138px) !important;
+    left: max(76px, calc(50% - 430px)) !important;
+    top: 44px !important;
+    opacity: 0.86 !important;
+}
+
+.history-visual-top-center {
+    width: clamp(96px, 10.5vw, 150px) !important;
+    top: 48px !important;
+    opacity: 0.86 !important;
+}
+
+.history-visual-top-right {
+    width: clamp(86px, 9.5vw, 138px) !important;
+    right: max(76px, calc(50% - 430px)) !important;
+    top: 46px !important;
+    opacity: 0.86 !important;
+}
+
+.history-visual-left {
+    width: clamp(82px, 8.5vw, 126px) !important;
+    left: max(78px, calc(50% - 500px)) !important;
+    top: 432px !important;
+    opacity: 0.62 !important;
+}
+
+.history-visual-right {
+    width: clamp(82px, 8.5vw, 126px) !important;
+    right: max(78px, calc(50% - 500px)) !important;
+    top: 432px !important;
+    opacity: 0.62 !important;
+}
+
+.prediction-coming-soon-wrap {
+    margin-top: 54px !important;
+    overflow: hidden !important;
+}
+
+.prediction-coming-soon-img {
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+@media (max-width: 900px) {
+    .prediction-history-section {
+        padding-top: 140px !important;
+    }
+
+    .history-visual-top-left,
+    .history-visual-top-center,
+    .history-visual-top-right {
+        width: 80px !important;
+    }
+}
+
+/* Final placement for prediction history visuals */
+.prediction-history-section {
+    position: relative !important;
+    width: min(980px, calc(100% - 48px)) !important;
+    margin: 132px auto 60px !important;
+    padding: 112px 0 34px !important;
+    min-height: 520px !important;
+}
+
+.history-visual-layer {
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    overflow: visible !important;
+}
+
+.history-visual {
+    position: absolute !important;
+    display: block !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.18)) saturate(1.04) !important;
+    transform-origin: center !important;
+    opacity: 0.82 !important;
+}
+
+.history-visual-top-left {
+    width: clamp(96px, 11vw, 142px) !important;
+    left: clamp(28px, 8vw, 126px) !important;
+    top: 8px !important;
+    transform: rotate(-7deg) !important;
+}
+
+.history-visual-top-center {
+    width: clamp(106px, 12vw, 158px) !important;
+    left: 50% !important;
+    top: 4px !important;
+    transform: translateX(-50%) rotate(2deg) !important;
+}
+
+.history-visual-top-right {
+    width: clamp(96px, 11vw, 142px) !important;
+    right: clamp(28px, 8vw, 126px) !important;
+    top: 8px !important;
+    transform: rotate(8deg) !important;
+}
+
+.history-visual-left {
+    width: clamp(84px, 9vw, 122px) !important;
+    left: clamp(18px, 6vw, 94px) !important;
+    top: 330px !important;
+    opacity: 0.64 !important;
+    transform: rotate(-5deg) !important;
+}
+
+.history-visual-right {
+    width: clamp(84px, 9vw, 122px) !important;
+    right: clamp(18px, 6vw, 94px) !important;
+    top: 330px !important;
+    opacity: 0.64 !important;
+    transform: rotate(6deg) !important;
+}
+
+.history-card {
+    position: relative !important;
+    z-index: 2 !important;
+    width: min(850px, 100%) !important;
+    margin: 0 auto !important;
+}
+
+.prediction-coming-soon-wrap {
+    position: relative !important;
+    z-index: 1 !important;
+    width: min(700px, calc(100% - 96px)) !important;
+    min-height: 190px !important;
+    margin: 54px auto 0 !important;
+    padding: 18px 34px !important;
+    overflow: hidden !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(239, 226, 189, 0.55) !important;
+    background: rgba(239, 226, 189, 0.18) !important;
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+.prediction-coming-soon-img {
+    display: block !important;
+    width: min(360px, 66%) !important;
+    max-height: 185px !important;
+    margin: 0 auto !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.28)) !important;
+}
+
+@media (max-width: 900px) {
+    .prediction-history-section {
+        width: min(92vw, 720px) !important;
+        margin-top: 90px !important;
+        padding-top: 94px !important;
+        min-height: 500px !important;
+    }
+
+    .history-visual-top-left,
+    .history-visual-top-center,
+    .history-visual-top-right {
+        width: 78px !important;
+    }
+
+    .history-visual-left,
+    .history-visual-right {
+        width: 68px !important;
+        top: 318px !important;
+    }
+
+    .prediction-coming-soon-wrap {
+        width: min(88vw, 560px) !important;
+        margin-top: 46px !important;
+    }
+}
+
+/* Clean separated placement for prediction history partner visuals */
+.prediction-history-section {
+    position: relative !important;
+    width: min(1040px, calc(100% - 48px)) !important;
+    margin: 128px auto 64px !important;
+    padding: 132px 0 38px !important;
+    min-height: 640px !important;
+    overflow: visible !important;
+}
+
+.history-visual-layer {
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    overflow: visible !important;
+}
+
+.history-visual {
+    position: absolute !important;
+    display: block !important;
+    object-fit: contain !important;
+    opacity: 0.84 !important;
+    filter: drop-shadow(0 20px 34px rgba(5, 8, 22, 0.18)) saturate(1.06) !important;
+}
+
+.history-visual-top-left {
+    width: clamp(105px, 10vw, 150px) !important;
+    left: clamp(44px, 12vw, 170px) !important;
+    top: 0 !important;
+    transform: rotate(-6deg) !important;
+}
+
+.history-visual-top-center {
+    width: clamp(112px, 10.5vw, 158px) !important;
+    left: 50% !important;
+    top: 8px !important;
+    transform: translateX(-50%) rotate(1deg) !important;
+}
+
+.history-visual-top-right {
+    width: clamp(105px, 10vw, 150px) !important;
+    right: clamp(44px, 12vw, 170px) !important;
+    top: 0 !important;
+    transform: rotate(7deg) !important;
+}
+
+.history-visual-left {
+    width: clamp(90px, 8.5vw, 126px) !important;
+    left: clamp(38px, 8vw, 116px) !important;
+    top: 486px !important;
+    opacity: 0.68 !important;
+    transform: rotate(-5deg) !important;
+}
+
+.history-visual-right {
+    width: clamp(90px, 8.5vw, 126px) !important;
+    right: clamp(38px, 8vw, 116px) !important;
+    top: 486px !important;
+    opacity: 0.68 !important;
+    transform: rotate(6deg) !important;
+}
+
+.prediction-history-section .history-card {
+    position: relative !important;
+    z-index: 3 !important;
+    width: min(850px, 100%) !important;
+    margin: 0 auto !important;
+}
+
+.prediction-coming-soon-wrap {
+    position: relative !important;
+    z-index: 2 !important;
+    width: min(650px, calc(100% - 210px)) !important;
+    min-height: 220px !important;
+    margin: 86px auto 0 !important;
+    padding: 24px 44px !important;
+    overflow: hidden !important;
+    border-radius: 22px !important;
+    border: 1px solid rgba(239, 226, 189, 0.62) !important;
+    background: rgba(239, 226, 189, 0.16) !important;
+    box-shadow: 0 24px 60px rgba(5, 8, 22, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.42) !important;
+}
+
+.prediction-coming-soon-img {
+    display: block !important;
+    width: min(430px, 92%) !important;
+    max-height: 210px !important;
+    margin: 0 auto !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.32)) !important;
+}
+
+@media (max-width: 900px) {
+    .prediction-history-section {
+        width: min(94vw, 720px) !important;
+        margin-top: 92px !important;
+        padding-top: 104px !important;
+        min-height: 560px !important;
+    }
+
+    .history-visual-top-left,
+    .history-visual-top-center,
+    .history-visual-top-right {
+        width: 76px !important;
+    }
+
+    .history-visual-left,
+    .history-visual-right {
+        width: 66px !important;
+        top: 438px !important;
+        opacity: 0.52 !important;
+    }
+
+    .prediction-coming-soon-wrap {
+        width: min(78vw, 500px) !important;
+        margin-top: 68px !important;
+        min-height: 180px !important;
+    }
+}
+
+/* Make the Coming Soon artwork the dominant footer visual */
+.prediction-coming-soon-wrap {
+    min-height: 270px;
+}
+.prediction-coming-soon-img {
+    width: min(620px, 96%);
+    max-height: 260px;
+    filter: drop-shadow(0 26px 42px rgba(0, 0, 0, 0.28));
+}
+@media (max-width: 760px) {
+    .prediction-coming-soon-wrap {
+        min-height: 210px;
+    }
+    .prediction-coming-soon-img {
+        width: min(390px, 96%);
+        max-height: 195px;
+    }
+}
+
+
+/* Single leagues coming-soon banner between guide and history */
+.history-visual-layer,
+.prediction-coming-soon-wrap {
+    display: none !important;
+}
+
+.prediction-history-section {
+    width: min(1040px, calc(100% - 48px)) !important;
+    margin: 82px auto 64px !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    position: relative !important;
+}
+
+.prediction-leagues-banner {
+    width: min(1040px, 100%) !important;
+    margin: 0 auto 48px !important;
+    border-radius: 26px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(239, 226, 189, 0.72) !important;
+    background: rgba(239, 226, 189, 0.22) !important;
+    box-shadow: 0 24px 56px rgba(5, 8, 22, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.48) !important;
+}
+
+.prediction-leagues-img {
+    display: block !important;
+    width: 100% !important;
+    aspect-ratio: 2.5 / 1 !important;
+    height: auto !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    filter: saturate(1.02) contrast(1.02) !important;
+}
+
+.prediction-history-section .history-card {
+    margin: 0 auto !important;
+}
+
+@media (max-width: 760px) {
+    .prediction-history-section {
+        width: min(94vw, 720px) !important;
+        margin-top: 46px !important;
+    }
+
+    .prediction-leagues-banner {
+        margin-bottom: 28px !important;
+        border-radius: 18px !important;
+    }
+
+    .prediction-leagues-img {
+        aspect-ratio: 1.75 / 1 !important;
+    }
+}

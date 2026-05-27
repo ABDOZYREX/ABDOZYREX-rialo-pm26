@@ -1,4 +1,4 @@
-const http = require("node:http");
+﻿const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
@@ -876,35 +876,35 @@ function buildLocalAiReply(message, contextSummary) {
 
   const reply = (...lines) => lines.join(arabic ? "\n\n" : "\n\n");
 
-  if (/wallet|محفظ|metamask|megaeth|connect/i.test(lower)) {
+  if (/wallet|Ù…Ø­ÙØ¸|metamask|megaeth|connect/i.test(lower)) {
     return reply(
       arabic
-        ? `أنت الآن داخل ${contextSummary.page}. إذا كانت المحفظة ${contextSummary.walletStatus === "connected" ? "متصلة" : "غير متصلة"} فابدأ من زر Connect Wallet أعلى الواجهة.`
+        ? `Ø£Ù†Øª Ø§Ù„Ø¢Ù† Ø¯Ø§Ø®Ù„ ${contextSummary.page}. Ø¥Ø°Ø§ ÙƒØ§Ù†Øª Ø§Ù„Ù…Ø­ÙØ¸Ø© ${contextSummary.walletStatus === "connected" ? "Ù…ØªØµÙ„Ø©" : "ØºÙŠØ± Ù…ØªØµÙ„Ø©"} ÙØ§Ø¨Ø¯Ø£ Ù…Ù† Ø²Ø± Connect Wallet Ø£Ø¹Ù„Ù‰ Ø§Ù„ÙˆØ§Ø¬Ù‡Ø©.`
         : `You are currently on ${contextSummary.page}. Your wallet is ${contextSummary.walletStatus}. Start from the Connect Wallet button at the top.`,
       arabic
-        ? `أي عملية شراء أو بيع أو listing حقيقية تحتاج تأكيد من MetaMask على MegaETH testnet.`
+        ? `Ø£ÙŠ Ø¹Ù…Ù„ÙŠØ© Ø´Ø±Ø§Ø¡ Ø£Ùˆ Ø¨ÙŠØ¹ Ø£Ùˆ listing Ø­Ù‚ÙŠÙ‚ÙŠØ© ØªØ­ØªØ§Ø¬ ØªØ£ÙƒÙŠØ¯ Ù…Ù† MetaMask Ø¹Ù„Ù‰ MegaETH testnet.`
         : `Any real buy, sell, or listing action needs MetaMask confirmation on MegaETH testnet.`
     );
   }
 
-  if (/slippage|انزلاق/i.test(lower)) {
+  if (/slippage|Ø§Ù†Ø²Ù„Ø§Ù‚/i.test(lower)) {
     return reply(
       arabic
-        ? `الـ slippage هنا ليس مجرد رقم واجهة. للتوكنات الجديدة نحن نمرر حدود الحماية داخل المعاملة نفسها، لذلك إذا تحرك السعر أكثر من المسموح تفشل العملية بدل أن تنفذ بسعر سيئ.`
+        ? `Ø§Ù„Ù€ slippage Ù‡Ù†Ø§ Ù„ÙŠØ³ Ù…Ø¬Ø±Ø¯ Ø±Ù‚Ù… ÙˆØ§Ø¬Ù‡Ø©. Ù„Ù„ØªÙˆÙƒÙ†Ø§Øª Ø§Ù„Ø¬Ø¯ÙŠØ¯Ø© Ù†Ø­Ù† Ù†Ù…Ø±Ø± Ø­Ø¯ÙˆØ¯ Ø§Ù„Ø­Ù…Ø§ÙŠØ© Ø¯Ø§Ø®Ù„ Ø§Ù„Ù…Ø¹Ø§Ù…Ù„Ø© Ù†ÙØ³Ù‡Ø§ØŒ Ù„Ø°Ù„Ùƒ Ø¥Ø°Ø§ ØªØ­Ø±Ùƒ Ø§Ù„Ø³Ø¹Ø± Ø£ÙƒØ«Ø± Ù…Ù† Ø§Ù„Ù…Ø³Ù…ÙˆØ­ ØªÙØ´Ù„ Ø§Ù„Ø¹Ù…Ù„ÙŠØ© Ø¨Ø¯Ù„ Ø£Ù† ØªÙ†ÙØ° Ø¨Ø³Ø¹Ø± Ø³ÙŠØ¦.`
         : `Slippage here is not just a display number. For the newer token flow we pass protection limits into the transaction, so if price moves too far the transaction fails instead of filling badly.`,
       arabic
-        ? `اختر نسبة أصغر إذا كنت تريد حماية أكبر، لكن هذا قد يسبب فشلًا أكثر للصفقات أثناء التحرك السريع.`
+        ? `Ø§Ø®ØªØ± Ù†Ø³Ø¨Ø© Ø£ØµØºØ± Ø¥Ø°Ø§ ÙƒÙ†Øª ØªØ±ÙŠØ¯ Ø­Ù…Ø§ÙŠØ© Ø£ÙƒØ¨Ø±ØŒ Ù„ÙƒÙ† Ù‡Ø°Ø§ Ù‚Ø¯ ÙŠØ³Ø¨Ø¨ ÙØ´Ù„Ù‹Ø§ Ø£ÙƒØ«Ø± Ù„Ù„ØµÙÙ‚Ø§Øª Ø£Ø«Ù†Ø§Ø¡ Ø§Ù„ØªØ­Ø±Ùƒ Ø§Ù„Ø³Ø±ÙŠØ¹.`
         : `Choose a smaller percentage for tighter protection, but expect more failed trades during fast moves.`
     );
   }
 
-  if (/nft|collection|items|list|listing|sell nft|buy listed|كريستيانو|رونالدو/i.test(lower)) {
+  if (/nft|collection|items|list|listing|sell nft|buy listed|ÙƒØ±ÙŠØ³ØªÙŠØ§Ù†Ùˆ|Ø±ÙˆÙ†Ø§Ù„Ø¯Ùˆ/i.test(lower)) {
     return reply(
       arabic
-        ? `داخل NFT Collection: تبويب Collection للمشتري، وتبويب Items للمالك. عندما تعمل listing من Items، تظهر البطاقة نفسها في Collection بالسعر الذي وضعته.`
+        ? `Ø¯Ø§Ø®Ù„ NFT Collection: ØªØ¨ÙˆÙŠØ¨ Collection Ù„Ù„Ù…Ø´ØªØ±ÙŠØŒ ÙˆØªØ¨ÙˆÙŠØ¨ Items Ù„Ù„Ù…Ø§Ù„Ùƒ. Ø¹Ù†Ø¯Ù…Ø§ ØªØ¹Ù…Ù„ listing Ù…Ù† ItemsØŒ ØªØ¸Ù‡Ø± Ø§Ù„Ø¨Ø·Ø§Ù‚Ø© Ù†ÙØ³Ù‡Ø§ ÙÙŠ Collection Ø¨Ø§Ù„Ø³Ø¹Ø± Ø§Ù„Ø°ÙŠ ÙˆØ¶Ø¹ØªÙ‡.`
         : `Inside NFT Collection: Collection is for buyers, and Items is for owners. When you list from Items, that NFT appears in Collection at the price you set.`,
       arabic
-        ? `Owned يجب أن يعكس الكمية الموجودة فعليًا في المحفظة، وListed يعكس الكمية المعروضة للبيع.`
+        ? `Owned ÙŠØ¬Ø¨ Ø£Ù† ÙŠØ¹ÙƒØ³ Ø§Ù„ÙƒÙ…ÙŠØ© Ø§Ù„Ù…ÙˆØ¬ÙˆØ¯Ø© ÙØ¹Ù„ÙŠÙ‹Ø§ ÙÙŠ Ø§Ù„Ù…Ø­ÙØ¸Ø©ØŒ ÙˆListed ÙŠØ¹ÙƒØ³ Ø§Ù„ÙƒÙ…ÙŠØ© Ø§Ù„Ù…Ø¹Ø±ÙˆØ¶Ø© Ù„Ù„Ø¨ÙŠØ¹.`
         : `Owned should reflect the quantity actually in the wallet, while Listed reflects the quantity currently for sale.`
     );
   }
@@ -912,32 +912,32 @@ function buildLocalAiReply(message, contextSummary) {
   if (/token|create|launch|market/i.test(lower)) {
     return reply(
       arabic
-        ? `داخل Rialo Market يمكنك إنشاء توكن جديد، شراءه، بيعه، ومتابعة الشموع. إذا كنت على صفحة توكن الآن فالتوكن النشط هو ${contextSummary.activeTokenName || "غير محدد"} ${contextSummary.activeTokenSymbol || ""}.`
+        ? `Ø¯Ø§Ø®Ù„ Rialo Market ÙŠÙ…ÙƒÙ†Ùƒ Ø¥Ù†Ø´Ø§Ø¡ ØªÙˆÙƒÙ† Ø¬Ø¯ÙŠØ¯ØŒ Ø´Ø±Ø§Ø¡Ù‡ØŒ Ø¨ÙŠØ¹Ù‡ØŒ ÙˆÙ…ØªØ§Ø¨Ø¹Ø© Ø§Ù„Ø´Ù…ÙˆØ¹. Ø¥Ø°Ø§ ÙƒÙ†Øª Ø¹Ù„Ù‰ ØµÙØ­Ø© ØªÙˆÙƒÙ† Ø§Ù„Ø¢Ù† ÙØ§Ù„ØªÙˆÙƒÙ† Ø§Ù„Ù†Ø´Ø· Ù‡Ùˆ ${contextSummary.activeTokenName || "ØºÙŠØ± Ù…Ø­Ø¯Ø¯"} ${contextSummary.activeTokenSymbol || ""}.`
         : `Inside Rialo Market you can create a new token, buy it, sell it, and follow the candles. If you are on a token page now, the active token is ${contextSummary.activeTokenName || "not specified"} ${contextSummary.activeTokenSymbol || ""}.`,
       arabic
-        ? `إذا أردت مساعدة عملية، اكتب لي مثلًا: كيف أشتري؟ كيف أبيع؟ ما معنى Pool RLO؟`
+        ? `Ø¥Ø°Ø§ Ø£Ø±Ø¯Øª Ù…Ø³Ø§Ø¹Ø¯Ø© Ø¹Ù…Ù„ÙŠØ©ØŒ Ø§ÙƒØªØ¨ Ù„ÙŠ Ù…Ø«Ù„Ù‹Ø§: ÙƒÙŠÙ Ø£Ø´ØªØ±ÙŠØŸ ÙƒÙŠÙ Ø£Ø¨ÙŠØ¹ØŸ Ù…Ø§ Ù…Ø¹Ù†Ù‰ Pool RLOØŸ`
         : `For practical help, ask things like: how do I buy, how do I sell, or what does Pool RLO mean?`
     );
   }
 
-  if (/group|bracket|prediction|world cup|groups|champion|مجموعات|براكيت|توقع/i.test(lower)) {
+  if (/group|bracket|prediction|world cup|groups|champion|Ù…Ø¬Ù…ÙˆØ¹Ø§Øª|Ø¨Ø±Ø§ÙƒÙŠØª|ØªÙˆÙ‚Ø¹/i.test(lower)) {
     return reply(
       arabic
-        ? `في وضع التوقعات: المجموعات المكتملة الآن ${contextSummary.completedGroups}/12، وعدد الاختيارات الحالية ${contextSummary.madePicks}.`
+        ? `ÙÙŠ ÙˆØ¶Ø¹ Ø§Ù„ØªÙˆÙ‚Ø¹Ø§Øª: Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ø§Øª Ø§Ù„Ù…ÙƒØªÙ…Ù„Ø© Ø§Ù„Ø¢Ù† ${contextSummary.completedGroups}/12ØŒ ÙˆØ¹Ø¯Ø¯ Ø§Ù„Ø§Ø®ØªÙŠØ§Ø±Ø§Øª Ø§Ù„Ø­Ø§Ù„ÙŠØ© ${contextSummary.madePicks}.`
         : `In prediction mode: completed groups are ${contextSummary.completedGroups}/12, and current picks are ${contextSummary.madePicks}.`,
       arabic
-        ? `ابدأ بترتيب المجموعات، ثم أنشئ الـ bracket، ثم اختر البطل، ثم قدّم التوقع بعد ربط المحفظة.`
+        ? `Ø§Ø¨Ø¯Ø£ Ø¨ØªØ±ØªÙŠØ¨ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ø§ØªØŒ Ø«Ù… Ø£Ù†Ø´Ø¦ Ø§Ù„Ù€ bracketØŒ Ø«Ù… Ø§Ø®ØªØ± Ø§Ù„Ø¨Ø·Ù„ØŒ Ø«Ù… Ù‚Ø¯Ù‘Ù… Ø§Ù„ØªÙˆÙ‚Ø¹ Ø¨Ø¹Ø¯ Ø±Ø¨Ø· Ø§Ù„Ù…Ø­ÙØ¸Ø©.`
         : `Start by ranking groups, then generate the bracket, then choose the champion, and finally submit after connecting the wallet.`
     );
   }
 
   return reply(
     arabic
-      ? `أنا مساعد Rialo داخل الموقع. أقدر أشرح لك السوق، الـ NFTs، الـ wallet، التوقعات، أو خطوات أي عملية تريدها.`
-      : `I’m the Rialo in-app assistant. I can explain the market, NFTs, wallet flow, predictions, or the steps behind any action you want.`,
+      ? `Ø£Ù†Ø§ Ù…Ø³Ø§Ø¹Ø¯ Rialo Ø¯Ø§Ø®Ù„ Ø§Ù„Ù…ÙˆÙ‚Ø¹. Ø£Ù‚Ø¯Ø± Ø£Ø´Ø±Ø­ Ù„Ùƒ Ø§Ù„Ø³ÙˆÙ‚ØŒ Ø§Ù„Ù€ NFTsØŒ Ø§Ù„Ù€ walletØŒ Ø§Ù„ØªÙˆÙ‚Ø¹Ø§ØªØŒ Ø£Ùˆ Ø®Ø·ÙˆØ§Øª Ø£ÙŠ Ø¹Ù…Ù„ÙŠØ© ØªØ±ÙŠØ¯Ù‡Ø§.`
+      : `Iâ€™m the Rialo in-app assistant. I can explain the market, NFTs, wallet flow, predictions, or the steps behind any action you want.`,
     arabic
-      ? `اكتب سؤالك مباشرة وسأجاوبك حسب الصفحة التي أنت فيها الآن: ${contextSummary.page}.`
-      : `Ask directly and I’ll answer based on the page you are currently on: ${contextSummary.page}.`
+      ? `Ø§ÙƒØªØ¨ Ø³Ø¤Ø§Ù„Ùƒ Ù…Ø¨Ø§Ø´Ø±Ø© ÙˆØ³Ø£Ø¬Ø§ÙˆØ¨Ùƒ Ø­Ø³Ø¨ Ø§Ù„ØµÙØ­Ø© Ø§Ù„ØªÙŠ Ø£Ù†Øª ÙÙŠÙ‡Ø§ Ø§Ù„Ø¢Ù†: ${contextSummary.page}.`
+      : `Ask directly and Iâ€™ll answer based on the page you are currently on: ${contextSummary.page}.`
   );
 }
 
@@ -1966,6 +1966,48 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  if (req.method === "POST" && pathname === "/ask") {
+    try {
+      const body = await parseBody(req);
+      const question = sanitizeString(body.question || body.message || "", 1200);
+      const contextSummary = summarizeAiContext(body.context || {});
+
+      if (!question) {
+        sendJson(res, 400, { error: "Question is required." });
+        return;
+      }
+
+      let answer = "";
+      let mode = "local";
+      let fallbackReason = "";
+
+      try {
+        const openAiReply = await requestOpenAiChat(question, contextSummary);
+        if (openAiReply) {
+          answer = openAiReply;
+          mode = "openai";
+        }
+      } catch (error) {
+        fallbackReason = error?.message || "OpenAI request failed";
+        indexerState.lastError = `AI fallback used: ${fallbackReason}`;
+      }
+
+      if (!answer) {
+        answer = buildLocalAiReply(question, contextSummary);
+      }
+
+      sendJson(res, 200, {
+        ok: true,
+        mode,
+        answer,
+        fallbackReason
+      });
+      return;
+    } catch (error) {
+      sendJson(res, 400, { error: error.message });
+      return;
+    }
+  }
   if (req.method === "POST" && pathname === "/api/ai-chat") {
     try {
       const body = await parseBody(req);
@@ -2204,4 +2246,5 @@ startChainIndexer();
 server.listen(PORT, () => {
   console.log(`Rialo Market server running on http://localhost:${PORT}`);
 });
+
 

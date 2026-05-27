@@ -1,4 +1,4 @@
-const worldCupGroups = [
+ï»¿const worldCupGroups = [
     { id: "A", name: "Group A", teams: [["Mexico", "mx"], ["South Africa", "za"], ["South Korea", "kr"], ["Czechia", "cz"]] },
     { id: "B", name: "Group B", teams: [["Canada", "ca"], ["Switzerland", "ch"], ["Qatar", "qa"], ["Bosnia and Herzegovina", "ba"]] },
     { id: "C", name: "Group C", teams: [["Brazil", "br"], ["Morocco", "ma"], ["Scotland", "gb-sct"], ["Haiti", "ht"]] },
@@ -367,8 +367,26 @@ function setNftListings(listings = []) {
     });
 }
 
+const RIALO_BACKEND_URL = "https://rialo-pmm.onrender.com";
+
+function getApiUrl(pathname) {
+    const path = String(pathname || "");
+    if (/^https?:\/\//i.test(path)) {
+        return path;
+    }
+
+    const host = window.location.hostname || "";
+    const isLocalBackend = host === "localhost" || host === "127.0.0.1" || host.includes("onrender.com");
+    const useRemoteBackend = window.location.protocol === "file:" || !isLocalBackend;
+
+    if (!useRemoteBackend) {
+        return path;
+    }
+
+    return `${RIALO_BACKEND_URL}${path.startsWith("/") ? path : `/${path}`}`;
+}
 async function apiFetchJson(pathname, options = {}) {
-    const response = await fetch(pathname, {
+    const response = await fetch(getApiUrl(pathname), {
         method: options.method || "GET",
         headers: {
             "Content-Type": "application/json",
@@ -531,6 +549,21 @@ function buildAiContextPayload() {
     };
 }
 
+async function askAI(question) {
+    const response = await fetch(`${RIALO_BACKEND_URL}/ask`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            question: question
+        })
+    });
+
+    const data = await response.json();
+
+    return data.answer;
+}
 async function submitAiAssistantMessage(messageText) {
     const refs = getAiAssistantRefs();
     if (!refs.input || !refs.form || aiAssistantBusy) {
@@ -555,20 +588,14 @@ async function submitAiAssistantMessage(messageText) {
     refs.messages.scrollTop = refs.messages.scrollHeight;
 
     try {
-        const response = await apiFetchJson("/api/ai-chat", {
-            method: "POST",
-            body: JSON.stringify({
-                message: text,
-                context: buildAiContextPayload()
-            })
-        });
+        const answer = await askAI(text);
 
         typing.remove();
-        appendAiMessage("assistant", response.reply || "I’m here. Try asking me again.");
-        setAiAssistantMeta(buildAiAssistantMetaText(response));
+        appendAiMessage("assistant", answer || "Iâ€™m here. Try asking me again.");
+        setAiAssistantMeta("Live Rialo Chat response delivered.");
     } catch (error) {
         typing.remove();
-        appendAiMessage("assistant", error.message || "I couldn’t answer that right now.");
+        appendAiMessage("assistant", error.message || "I couldnâ€™t answer that right now.");
         setAiAssistantMeta("Assistant is available, but this reply used the local fallback.");
     } finally {
         aiAssistantBusy = false;
@@ -2993,7 +3020,7 @@ function setupRialoMarketUi() {
     }
 
     async function apiFetch(url, options = {}) {
-        const response = await fetch(url, {
+        const response = await fetch(getApiUrl(url), {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -3129,7 +3156,7 @@ function setupRialoMarketUi() {
                         </div>
                         <div class="market-portfolio-position-labels">
                             <strong>${escapeHTML(position.name)}</strong>
-                            <span>${escapeHTML(position.symbol)} · ${escapeHTML(formatCompact(position.balance))}</span>
+                            <span>${escapeHTML(position.symbol)} Â· ${escapeHTML(formatCompact(position.balance))}</span>
                         </div>
                     </div>
                     <div class="market-portfolio-position-value">
@@ -4665,7 +4692,7 @@ function renderExpandedNftCollection() {
     });
     if (itemsNote) {
         itemsNote.textContent = connectedWalletAddress
-            ? (ownedCards.length ? `${connectedWalletAddress.slice(0, 6)}...${connectedWalletAddress.slice(-4)} · ${ownedCards.length} owned captain card type(s)` : "No NFTs owned yet on this wallet.")
+            ? (ownedCards.length ? `${connectedWalletAddress.slice(0, 6)}...${connectedWalletAddress.slice(-4)} Â· ${ownedCards.length} owned captain card type(s)` : "No NFTs owned yet on this wallet.")
             : "Connect wallet to load your NFT items.";
     }
 
@@ -6450,6 +6477,8 @@ function flashAdvancedConnector() {
 }
 
 init();
+
+
 
 
 
